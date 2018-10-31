@@ -1,0 +1,13 @@
+
+
+.newsList{
+  height: 400px;
+  overflow: auto
+}
+
+.news-card {
+  h1 {
+    margin: 0px;
+    display: block;
+  }
+}
