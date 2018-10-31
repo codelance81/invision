@@ -14,7 +14,6 @@ class NewsPanel extends React.Component {
   }
 
   componentDidMount(){
-    debugger
     const { symbol } = this.props
     this.setState ({
       symbol: symbol
@@ -27,7 +26,6 @@ class NewsPanel extends React.Component {
   componentWillReceiveProps(nextProps){
     const { symbol } = this.state;
     if(symbol !== nextProps.symbol){
-      debugger
       this.setState ({
         symbol: nextProps.symbol
       },() => {
@@ -45,7 +43,7 @@ class NewsPanel extends React.Component {
       })
     })
     .catch(err => {
-      debugger
+      console.log(err);
     })
   }
 

@@ -18,7 +18,6 @@ class StockSearch extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    debugger
     this.props.handleSubmit(this.state.symbol);
   }
 
