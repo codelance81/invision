@@ -1,6 +1,5 @@
 import React, {Fragment} from 'react';
-import {Jumbotron } from 'react-bootstrap';
-import { Container,Card, Button, CardImg, CardTitle, CardText, CardDeck,
+import { Container,Jumbotron,Card, Button, CardImg, CardTitle, CardText, CardDeck,
   CardSubtitle, Media, Row, Col } from 'reactstrap';
 
 

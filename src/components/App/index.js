@@ -17,6 +17,7 @@ import * as routes from '../../constants/routes';
 
 import './index.css';
 import '../../assests/style/style.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () =>
   <Router>
@@ -29,6 +30,8 @@ const App = () =>
       
       <Route exact path={routes.LANDING} component={() => <LandingPage />} />
       <Route exact path={routes.DASHBOARD} component={() => <Dashboard />} />
+      <Route exact path={routes.SIGN_UP} component={() => <SignUpPage />} />
+      <Route exact path={routes.SIGN_IN} component={() => <SignInPage />} />
     
 
       

@@ -1,7 +1,7 @@
 import React from 'react';
 import Moment from 'react-moment';
 import { truncate } from 'lodash';
-import { isEqual } from 'ip';
+import { Row, Col } from 'reactstrap';
 
 class NewsRow extends React.Component { 
   constructor() {
@@ -15,15 +15,15 @@ class NewsRow extends React.Component {
     const isTruncate = this.state.truncate;
     const { data } = this.props;  
     return (
-      <div className="row">
-        <div className="col-md-12">
+      <Row>
+        <Col md="12">
           <div className="news-card">
             <small>
               <Moment format = "YYYY/MM/DD">
                 {data.datetime}
               </Moment>
             </small>
-            <h3 style={{marginTop:1}}>{ data.headline }</h3>
+            <h3>{ data.headline }</h3>
             { data.summary.length > 120 ? (
               <React.Fragment>
                 { isTruncate ? <p>{truncate(data.summary, { length: 120 })}</p> : <p>{data.summary}</p> }
@@ -34,15 +34,9 @@ class NewsRow extends React.Component {
               ) : <p>{data.summary}</p>
             }
           </div>
-        </div>
-      </div>
+        </Col>
+      </Row>
     )
   }
 }
 export default NewsRow
-
-
-// _.truncate('hi-diddly-ho there, neighborino', {
-//     'length': 24,
-//     'separator': ' '
-//   });

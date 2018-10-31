@@ -1,4 +1,5 @@
 import React from 'react';
+import { Row, Col, InputGroup, Button, InputGroupAddon, Input} from 'reactstrap';
 
 class StockSearch extends React.Component {
   constructor() {
@@ -23,8 +24,31 @@ class StockSearch extends React.Component {
 
   render() {
     return (
-      <div className="row">
-        <div className="col-lg-12">
+      <Row>
+        <Col lg="12">
+          <form onSubmit={this.handleSubmit}>
+            <InputGroup>
+              <Input 
+                className="form-group"
+                value={this.state.symbol}
+                name={this.state.symbol}
+                onChange={this.handleChange}
+              />
+              <InputGroupAddon addonType="append"><Button  type="submit" color="success">Submit</Button></InputGroupAddon>
+            </InputGroup>
+          </form>
+        </Col>
+      </Row>
+    )
+  }
+}
+
+export default StockSearch;
+
+
+
+     {/* <Row>
+        <Col lg = "12">
           <form onSubmit={this.handleSubmit}>
             <div className="form-group">
               <input 
@@ -37,10 +61,5 @@ class StockSearch extends React.Component {
               <button type="submit" className="btn btn-success">Submit</button>
             </div>
           </form>
-        </div>
-      </div>
-    )
-  }
-}
-
-export default StockSearch;
+        </Col>
+      </Row> */}

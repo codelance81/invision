@@ -1,13 +1,47 @@
+@import 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900';
 
+body {
+  font-family: 'Roboto', sans-serif !important;
+}
 
 .newsList{
   height: 400px;
-  overflow: auto
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.news-card small {
+  color: #969696;
+}
+.news-card h3 {
+  margin: 5px 0 5px;
+  font-size: 16px;
+  line-height: 1.4;
+}
+.news-card {
+  margin-bottom: 15px;
+  border-bottom: 1px solid rgba(51, 51, 51, 0.18);
 }
 
-.news-card {
-  h1 {
-    margin: 0px;
-    display: block;
-  }
+.news-card p {
+  font-size: 13px;
+}
+.news-card .btn {
+  margin-bottom: 15px;
+  background: none;
+  color: #333;
+  border: none;
+  padding: 0px;
+}
+.news-card .btn:hover,
+.news-card .btn:focus {
+  background: none;
+  color: #333;
+  outline: none;
+}
+.news-panel h1 {
+  margin: 0;
+  padding: 20px;
+  text-transform: uppercase;
+  font-size: 18px;
+  background: #f3f3f3;
 }

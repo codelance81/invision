@@ -2,6 +2,8 @@ import React from 'react';
 import TradingViewWidget from 'react-tradingview-widget';
 import StockSearch from './StockSearch';
 import NewsPanel from './NewsPanel/index'
+import NvisionSignUp from './NvisionSignUp'
+import { Row, Col , Container} from 'reactstrap';
 
 class Dashboard extends React.Component {
   constructor() {
@@ -17,26 +19,26 @@ class Dashboard extends React.Component {
   }
   render() {
     return (
-      <div className="container">
+      <Container>
         <StockSearch handleSubmit={this.handleSubmit} />
-        <div className="row">
-          <div className="col-md-8">
+        <Row>
+          <Col md="8">
             <div className="main-chart">
               <TradingViewWidget symbol={this.state.symbol} height="400" width="100%" />
             </div>
             <div className="chain-price">
-              {/* <ChainPrice /> */}
-              {this.state.symbol}
             </div>
-          </div>
-          <div className="col-md-4">
+          </Col>
+          <Col md="4">
             <div className="news-container">
-              {/* <StockNewsFeed symbol={} /> */}
               <NewsPanel symbol={this.state.symbol} />
             </div>
-          </div>
-        </div>
-      </div>
+            <div className="nvision-signup">
+              <NvisionSignUp/>
+            </div>         
+          </Col>
+        </Row>
+      </Container>
     )
   }
 }
