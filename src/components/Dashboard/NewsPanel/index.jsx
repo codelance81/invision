@@ -58,7 +58,7 @@ class NewsPanel extends React.Component {
       <div className="news-panel">
         <h1>news feed</h1>
         <div className="newsList">
-          { map(newsArray, news => <NewsRow data={news}/> )}
+          { map(newsArray, news => <NewsRow key={news.datetime} data={news}/> )}
         </div>
       </div>
     )

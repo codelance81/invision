@@ -3,7 +3,9 @@
 body {
   font-family: 'Roboto', sans-serif !important;
 }
-
+.search-company{
+  margin-bottom: 30px;
+}
 .newsList{
   height: 400px;
   overflow-y: auto;

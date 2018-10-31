@@ -24,10 +24,11 @@ class StockSearch extends React.Component {
 
   render() {
     return (
-      <Row>
+      <Row className="search-company" >
         <Col lg="12">
           <form onSubmit={this.handleSubmit}>
-            <InputGroup>
+            <label><small>Search Company e.g. SPY</small></label>
+            <InputGroup>          
               <Input 
                 className="form-group"
                 value={this.state.symbol}
@@ -45,21 +46,3 @@ class StockSearch extends React.Component {
 
 export default StockSearch;
 
-
-
-     {/* <Row>
-        <Col lg = "12">
-          <form onSubmit={this.handleSubmit}>
-            <div className="form-group">
-              <input 
-                type="text" 
-                className="form-control" 
-                value={this.state.symbol} 
-                name={this.state.symbol} 
-                onChange={this.handleChange}
-              />
-              <button type="submit" className="btn btn-success">Submit</button>
-            </div>
-          </form>
-        </Col>
-      </Row> */}

@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-
+import { Button, Form, FormGroup, Input,Alert } from 'reactstrap';
 import { SignUpLink } from '../SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
 import { auth } from '../../firebase';
 import * as routes from '../../constants/routes';
 
 const SignInPage = ({ history }) =>
-  <div>
-    <h1>SignIn</h1>
-    <SignInForm history={history} />
-    <PasswordForgetLink />
-    <SignUpLink />
-  </div>
+  <center className="mt-4">
+    <div className="col-sm-4"> 
+      <SignInForm history={history} />
+      <PasswordForgetLink />
+      <SignUpLink />
+    </div>
+  </center>
 
 const updateByPropertyName = (propertyName, value) => () => ({
   [propertyName]: value,
@@ -44,7 +45,7 @@ class SignInForm extends Component {
     auth.doSignInWithEmailAndPassword(email, password)
       .then(() => {
         this.setState(() => ({ ...INITIAL_STATE }));
-        history.push(routes.HOME);
+        history.push(routes.DASHBOARD);
       })
       .catch(error => {
         this.setState(updateByPropertyName('error', error));
@@ -65,25 +66,33 @@ class SignInForm extends Component {
       email === '';
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <input
-          value={email}
-          onChange={event => this.setState(updateByPropertyName('email', event.target.value))}
-          type="text"
-          placeholder="Email Address"
-        />
-        <input
-          value={password}
-          onChange={event => this.setState(updateByPropertyName('password', event.target.value))}
-          type="password"
-          placeholder="Password"
-        />
-        <button disabled={isInvalid} type="submit">
-          Sign In
-        </button>
-
-        { error && <p>{error.message}</p> }
-      </form>
+      <div className="login">          
+        <h3>Please Login !! </h3>
+        <hr/>
+        <Form onSubmit={this.onSubmit}>
+          <FormGroup>
+            <Input type="email"
+              name="email" 
+              value={email}
+              placeholder="Email address" 
+              onChange={event => this.setState(updateByPropertyName('email', event.target.value))}
+            />            
+          </FormGroup>
+          <FormGroup>
+            <Input
+              value={password}
+              onChange={event => this.setState(updateByPropertyName('password', event.target.value))}
+              type="password"
+              placeholder="Password"
+          />
+          </FormGroup>
+          <Button color="success" disabled={isInvalid} type="submit">
+            Sign In 
+            </Button>
+        </Form>
+        { error && <Alert color="danger">{error.message}</Alert> }
+      </div>
+     
     );
   }
 }
@@ -93,3 +102,5 @@ export default withRouter(SignInPage);
 export {
   SignInForm,
 };
+
+  

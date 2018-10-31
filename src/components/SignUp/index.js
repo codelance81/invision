@@ -3,13 +3,13 @@ import {
   Link,
   withRouter,
 } from 'react-router-dom';
+import { Button, Form, FormGroup, Input,Alert } from 'reactstrap';
 
 import { auth, db } from '../../firebase';
 import * as routes from '../../constants/routes';
 
 const SignUpPage = ({ history }) =>
   <div>
-    <h1>SignUp</h1>
     <SignUpForm history={history} />
   </div>
 
@@ -50,7 +50,7 @@ class SignUpForm extends Component {
         db.doCreateUser(authUser.user.uid, username, email)
           .then(() => {
             this.setState(() => ({ ...INITIAL_STATE }));
-            history.push(routes.HOME);
+            history.push(routes.DASHBOARD);
           })
           .catch(error => {
             this.setState(updateByPropertyName('error', error));
@@ -80,40 +80,58 @@ class SignUpForm extends Component {
       email === '';
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <input
-          value={username}
-          onChange={event => this.setState(updateByPropertyName('username', event.target.value))}
-          type="text"
-          placeholder="Full Name"
-        />
-        <input
-          value={email}
-          onChange={event => this.setState(updateByPropertyName('email', event.target.value))}
-          type="text"
-          placeholder="Email Address"
-        />
-        <input
-          value={passwordOne}
-          onChange={event => this.setState(updateByPropertyName('passwordOne', event.target.value))}
-          type="password"
-          placeholder="Password"
-        />
-        <input
-          value={passwordTwo}
-          onChange={event => this.setState(updateByPropertyName('passwordTwo', event.target.value))}
-          type="password"
-          placeholder="Confirm Password"
-        />
-        <button disabled={isInvalid} type="submit">
-          Sign Up
-        </button>
+      <center className="mt-4">
+        <div className="col-sm-4">          
+          <h3>Please SignUp !! </h3>
+          <hr/>
+          <Form onSubmit={this.onSubmit}>
+            <FormGroup>
+              <Input 
+                value={username}
+                onChange={event => this.setState(updateByPropertyName('username', event.target.value))}
+                type="text"
+                placeholder="Full Name"
+              />            
+            </FormGroup>
+            
+            <FormGroup>
+              <Input
+                value={email}
+                onChange={event => this.setState(updateByPropertyName('email', event.target.value))}
+                type="text"
+                placeholder="Email Address"
+              />
+            </FormGroup>
 
-        { error && <p>{error.message}</p> }
-      </form>
+            <FormGroup>
+              <Input
+                value={passwordOne}
+                onChange={event => this.setState(updateByPropertyName('passwordOne', event.target.value))}
+                type="password"
+                placeholder="Password"
+              />
+            </FormGroup>
+
+            <FormGroup>
+              <Input
+                value={passwordTwo}
+                onChange={event => this.setState(updateByPropertyName('passwordTwo', event.target.value))}
+                type="password"
+                placeholder="Confirm Password"
+              />
+            </FormGroup>
+
+            <Button color="success" style={{float:'left'}} disabled={isInvalid} type="submit">
+              Sign Up
+            </Button>
+            { error && <Alert color="danger">{error.message}</Alert> }
+          </Form>
+        </div>
+      </center>
     );
   }
 }
+
 
 const SignUpLink = () =>
   <p>
