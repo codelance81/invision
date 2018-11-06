@@ -47,3 +47,33 @@ body {
   font-size: 18px;
   background: #f3f3f3;
 }
+
+.adavance ,.nVisionSignUp{
+  margin-top: 30px;
+}
+.landing-block.left .row .col-md-6:first-child {
+  order: 1;
+}
+.landing-block img {
+  width: 100%;
+}
+
+
+.footer {
+  background-color: #f5f5f5;
+}
+
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+.form-ctrl-content {
+  position: relative;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  width: 1%;
+  margin-bottom: 0;
+}
+.Select-clear-zone {
+  display: none;
+}

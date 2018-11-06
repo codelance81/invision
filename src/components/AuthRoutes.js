@@ -1,7 +1,7 @@
 import React from 'react'
 import {Route, Redirect} from 'react-router-dom'
 import { includes } from 'lodash'
-import * as Routes from '../constants/routes'
+import * as routes from '../constants/routes'
 import {auth} from '../firebase/firebase'
 
 class AuthRoutes extends React.Component{
@@ -29,15 +29,21 @@ class AuthRoutes extends React.Component{
     });
   }
 
+ 
+
   render(){
     const {isLoggedIn} = this.state  
     const {path, component} = this.props;
-    if(isLoggedIn && includes(['/signin','signup'], path)){
-      return <Redirect to={Routes.DASHBOARD}/>
+    const allRoutes = routes;
+
+    if(isLoggedIn && includes([allRoutes.SIGN_IN,allRoutes.SIGN_UP], path)){
+      return <Redirect to={allRoutes.DASHBOARD}/>
     }
-    else if (!isLoggedIn && includes(['/vip'], path)){
-      return <Redirect to={Routes.DASHBOARD}/>
+
+    else if (!isLoggedIn && includes([allRoutes.ADAVANCED_FEATURES], path)){
+      return <Redirect to={allRoutes.SIGN_IN}/>
     }
+    
     return <Route path={path} component={component}/>
   }
 }

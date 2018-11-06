@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
+import { Button, Form, FormGroup, Input,Alert } from 'reactstrap';
 import { auth } from '../../firebase';
 import * as routes from '../../constants/routes';
 
 const PasswordForgetPage = () =>
-  <div>
-    <h1>PasswordForget</h1>
-    <PasswordForgetForm />
-  </div>
+  <center className="mt-4">
+    <div className="col-sm-4">
+      <h5>Forgot Password ?</h5>
+      <hr/>
+      <PasswordForgetForm />
+    </div>
+  </center>
 
 const updateByPropertyName = (propertyName, value) => () => ({
   [propertyName]: value,
@@ -49,22 +52,24 @@ class PasswordForgetForm extends Component {
     const isInvalid = email === '';
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <input
+     <Form onSubmit={this.onSubmit}>
+        <Input
           value={this.state.email}
           onChange={event => this.setState(updateByPropertyName('email', event.target.value))}
           type="text"
           placeholder="Email Address"
         />
-        <button disabled={isInvalid} type="submit">
+        <Button color="success" disabled={isInvalid} type="submit">
           Reset My Password
-        </button>
+        </Button>
 
-        { error && <p>{error.message}</p> }
-      </form>
+        { error && <Alert color="danger">{error.message}</Alert> }
+      </Form>
+      
     );
   }
 }
+
 
 const PasswordForgetLink = () =>
   <center>

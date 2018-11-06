@@ -1,17 +1,20 @@
 import React from 'react'
-import { Card ,Button, CardTitle, CardText, Row } from 'reactstrap';
+import { Card ,CardTitle, CardText, Row } from 'reactstrap';
+import { Link } from 'react-router-dom'
 
 
 const NvisionSignUp = () => (
-  <Row>
+  <Row className="nVisionSignUp">
     <Card body>
       <CardTitle>NVision SignUp</CardTitle>
       <CardText>
         Signup to nnvison for special features acess
         i.e. historical price, analyse etc.
       </CardText>
+      <span className="input-group-btn">
+        <Link to="/signin">NVISION SIGNUP</Link>
+      </span>
     </Card>
-    <Button color="success">NVISION SIGNUP</Button>
   </Row>
 )
 
