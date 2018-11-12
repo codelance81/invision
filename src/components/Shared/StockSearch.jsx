@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, InputGroup, Button, InputGroupAddon, Input} from 'reactstrap';
+import { Row, Col, Container} from 'reactstrap';
 import axios from 'axios';
 import Select from 'react-virtualized-select';
 import createFilterOptions from 'react-select-fast-filter-options';
@@ -9,13 +9,12 @@ import 'react-virtualized-select/styles.css'
 import { forEach, isEmpty } from 'lodash';
 
 class StockSearch extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
-      symbol: 'SPY',
-      allSymbols: [],
-      activeSymbols: [],
+      symbol: props.symbol,
+      allSymbols: []
     }
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -49,7 +48,7 @@ class StockSearch extends React.Component {
   }
 
   handleSubmit(e) {
-    this.props.handleSubmit(this.state.symbol);
+    this.props.handleSubmit(e.value);
   }
 
   render() {

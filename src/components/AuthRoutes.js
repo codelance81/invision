@@ -35,15 +35,12 @@ class AuthRoutes extends React.Component{
     const {isLoggedIn} = this.state  
     const {path, component} = this.props;
     const allRoutes = routes;
-
     if(isLoggedIn && includes([allRoutes.SIGN_IN,allRoutes.SIGN_UP], path)){
       return <Redirect to={allRoutes.DASHBOARD}/>
     }
-
     else if (!isLoggedIn && includes([allRoutes.ADAVANCED_FEATURES], path)){
       return <Redirect to={allRoutes.SIGN_IN}/>
     }
-    
     return <Route path={path} component={component}/>
   }
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import TradingViewWidget from 'react-tradingview-widget';
-import StockSearch from './StockSearch';
+import StockSearch from '../Shared/StockSearch';
 import NewsPanel from './NewsPanel/index'
 import NvisionSignUp from './NvisionSignUp'
 import Adavance from './Adavance'
@@ -8,17 +8,15 @@ import { Row, Col , Container} from 'reactstrap';
 import {auth} from '../../firebase/firebase'
 
 class Dashboard extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
-      symbol: "SPY",
-      isLogged:false
+      isLogged:false,
     }
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount(){  
+  componentDidMount() {
     this.authListener();
   }
 
@@ -39,33 +37,28 @@ class Dashboard extends React.Component {
     })
   }
 
-
-  handleSubmit(symbol) {
-    this.setState({ symbol: symbol });
-  }
   render() {
     const { isLogged } = this.state
-
+    const { handleSubmit, symbol } = this.props;
     return (
       <Container>
-        <StockSearch handleSubmit={this.handleSubmit} />
+        <StockSearch handleSubmit={handleSubmit} symbol={symbol} />
         <Row>
           <Col md="8">
             <div className="main-chart">
-              <TradingViewWidget 
+              {/* <TradingViewWidget 
                range="60m"
-                symbol={this.state.symbol} height="400" width="100%" />
+                symbol={this.state.symbol} height="400" width="100%" /> */}
             </div>
             <div className="chain-price">
             </div>
           </Col>
           <Col md="4">
             <div className="news-container">
-              <NewsPanel symbol={this.state.symbol} />
+              <NewsPanel symbol={symbol} />
             </div>
             <div className="nvision-signup">
               {!isLogged ? (<NvisionSignUp/> ) : (<Adavance/>)}
-              
             </div>         
           </Col>
         </Row>
