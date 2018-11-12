@@ -46,9 +46,10 @@ class Dashboard extends React.Component {
         <Row>
           <Col md="8">
             <div className="main-chart">
-              {/* <TradingViewWidget 
-               range="60m"
-                symbol={this.state.symbol} height="400" width="100%" /> */}
+              <TradingViewWidget 
+                range="60m"
+                symbol={symbol} height="400" width="100%"
+              />
             </div>
             <div className="chain-price">
             </div>

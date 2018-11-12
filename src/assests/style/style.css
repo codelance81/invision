@@ -77,3 +77,14 @@ body {
 .Select-clear-zone {
   display: none;
 }
+
+.thead, .year {
+  font-weight: bold
+}
+.red {
+  color: red;
+}
+.historical-price-data {
+  font-size: 13px;
+  text-align: center;
+}

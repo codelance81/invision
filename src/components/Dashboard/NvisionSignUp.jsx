@@ -1,10 +1,10 @@
 import React from 'react'
-import { Card ,CardTitle, CardText, Row } from 'reactstrap';
+import { Card ,CardTitle, CardText } from 'reactstrap';
 import { Link } from 'react-router-dom'
 
 
 const NvisionSignUp = () => (
-  <Row className="nVisionSignUp">
+  <div className="nVisionSignUp">
     <Card body>
       <CardTitle>NVision SignUp</CardTitle>
       <CardText>
@@ -15,7 +15,7 @@ const NvisionSignUp = () => (
         <Link to="/signin">NVISION SIGNUP</Link>
       </span>
     </Card>
-  </Row>
+  </div>
 )
 
 export default NvisionSignUp;

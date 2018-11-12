@@ -1,16 +1,13 @@
-import React from 'react'
+import React from 'react';
 import { Container } from 'reactstrap';
-import StockSearch from '../Shared/StockSearch'
+import StockSearch from '../Shared/StockSearch';
+import HistoricalPrice from './Historical_Price';
 
-class AdavanceFeatures extends React.Component {
-  render() {
-    const { handleSubmit, symbol } = this.props;
-    return (
-      <Container>
-        <StockSearch handleSubmit={handleSubmit} symbol={symbol} />
-      </Container>
-    )
-  }
-}
+const AdavanceFeatures = ({ handleSubmit, symbol }) => (
+  <Container>
+    <StockSearch handleSubmit={handleSubmit} symbol={symbol} />
+    <HistoricalPrice symbol={symbol} />
+  </Container>
+)
 
 export default AdavanceFeatures;
