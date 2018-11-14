@@ -88,3 +88,11 @@ body {
   font-size: 13px;
   text-align: center;
 }
+
+.historical-row-red {
+  color: red;
+}
+
+.historical-row-green {
+  color: green;
+}

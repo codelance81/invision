@@ -1,13 +1,13 @@
 import React from 'react'
 import '../../assests/style/footer.css'
-import {Container} from 'reactstrap'
+import { Grid } from 'react-bootstrap'
 
 
 const Footer = () => (
 
 
 	<section id="footer">
-		<Container>
+		<Grid>
 			<div className="row text-center text-xs-center text-sm-left text-md-left">
 				<div className="col-xs-12 col-sm-4 col-md-4">
 					<h5>Quick links</h5>
@@ -59,7 +59,7 @@ const Footer = () => (
 				</div>
 				<hr/>
 			</div>	
-		</Container>
+		</Grid>
 	</section>
 
     

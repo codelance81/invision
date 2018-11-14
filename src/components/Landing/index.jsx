@@ -1,6 +1,6 @@
 import React from 'react'
 import { contentArray } from './landing_data';
-import { Row, Col, Container } from 'reactstrap';
+import { Row, Col, Grid } from 'react-bootstrap';
 
 const LandingPage = () => {
   const list = contentArray.map((data) => (
@@ -20,9 +20,9 @@ const LandingPage = () => {
   ))
   return(
     <div className="main">
-      <Container>
+      <Grid>
         {list}
-      </Container>
+      </Grid>
     </div>
   )
 }

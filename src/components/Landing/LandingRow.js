@@ -1,7 +1,7 @@
 import React from 'react'
-import { Row, Col, Container } from 'reactstrap';
+import { Row, Grid } from 'react-bootstrap';
 const LandingRow = ({image,title,summary}) => (
-  <Container>
+  <Grid>
     <Row md="12">
       <Row md="6">
         <h2>{title}</h2>
@@ -11,7 +11,7 @@ const LandingRow = ({image,title,summary}) => (
         {image}
       </Row>
     </Row>
-  </Container>
+  </Grid>
 )
 
 

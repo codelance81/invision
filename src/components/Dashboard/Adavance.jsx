@@ -1,19 +1,19 @@
 import React from 'react'
-import { Card , CardTitle, CardText } from 'reactstrap';
+import { Panel } from 'react-bootstrap';
 import { Link } from 'react-router-dom'
 import  * as routes from '../../constants/routes' 
 
 
 const Adavance = () => (
   <div className="adavance"> 
-    <Card body>
-      <CardTitle>Adavance Features</CardTitle>
-      <CardText>
+    <Panel>
+      <Panel.Heading>Adavance Features</Panel.Heading>
+      <Panel.Body>
         Click for special features acess
         i.e. historical price, analyse etc.
-      </CardText>
+      </Panel.Body>
       <Link className="btn btn-success" to={routes.ADAVANCED_FEATURES}>ADAVANCED FEATURES</Link>
-    </Card>
+    </Panel>
   </div>
 )
 

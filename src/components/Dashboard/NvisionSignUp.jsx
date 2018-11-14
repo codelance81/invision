@@ -1,20 +1,20 @@
 import React from 'react'
-import { Card ,CardTitle, CardText } from 'reactstrap';
+import { Panel } from 'react-bootstrap';
 import { Link } from 'react-router-dom'
 
 
 const NvisionSignUp = () => (
   <div className="nVisionSignUp">
-    <Card body>
-      <CardTitle>NVision SignUp</CardTitle>
-      <CardText>
+    <Panel>
+      <Panel.Heading>NVision SignUp</Panel.Heading>
+      <Panel.Body>
         Signup to nnvison for special features acess
         i.e. historical price, analyse etc.
-      </CardText>
-      <span className="input-group-btn">
+      </Panel.Body>
+      <Panel.Footer>
         <Link to="/signin">NVISION SIGNUP</Link>
-      </span>
-    </Card>
+      </Panel.Footer>
+    </Panel>
   </div>
 )
 

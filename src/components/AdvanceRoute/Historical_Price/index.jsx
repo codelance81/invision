@@ -1,9 +1,10 @@
 import React from 'react';
 import axios from 'axios';
-import { Table } from 'reactstrap';
-import { map, groupBy, isEmpty, isEqual } from 'lodash';
-import HistoricalHeader from './HistoricalHeader'
-import HistoricalRow from './HistoricalRow'
+import { Table } from 'react-bootstrap';
+import { map, groupBy, isEmpty } from 'lodash';
+import HistoricalHeader from './HistoricalHeader';
+import HistoricalRow from './HistoricalRow';
+import ReactLoading from 'react-loading';
 
 class HistoricalPrice extends React.Component {
   constructor() {
@@ -11,6 +12,7 @@ class HistoricalPrice extends React.Component {
 
     this.state = {
       historicalData: [], 
+      isLoading: true
     }
 
     this.convertData = this.convertData.bind(this);
@@ -21,6 +23,8 @@ class HistoricalPrice extends React.Component {
     axios.get(`https://api.iextrading.com/1.0/stock/${symbol}/chart/5y`)
       .then(res => {
         this.convertData(res);
+        this.setState({ isLoading: false})
+
       }).catch(err => {
         console.log(err);
       })
@@ -29,8 +33,7 @@ class HistoricalPrice extends React.Component {
   convertData(res){
     const rawData = res.data;
     const yearMonthKeys = [];
-    let yearSorted;
-    let monthlySorted;
+    let yearSorted;   
 
     map(rawData, (data) => {
       const dataObj = {};
@@ -67,8 +70,19 @@ class HistoricalPrice extends React.Component {
     this.setState({ historicalData: yearSorted })
   }
 
+
   render() {
-    const { historicalData } = this.state;
+    const { historicalData ,isLoading} = this.state;
+    if (isLoading) {
+      return(
+        <center>
+          <div className="loader">
+            <ReactLoading type={'spinningBubbles'} color={'red'} height={'10%'} width={'10%'} />          
+            <h3>Loading...</h3>
+          </div>
+        </center>
+      ) 
+    }
     return (
       <Table className="table-responsive historical-price-data">
         <HistoricalHeader />

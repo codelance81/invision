@@ -3,15 +3,21 @@ import {
   Link,
   withRouter,
 } from 'react-router-dom';
-import { Button, Form, FormGroup, Input,Alert } from 'reactstrap';
+import { Button, Form, Grid, Row, Col,FormGroup,FormControl,Alert } from 'react-bootstrap';
 
 import { auth, db } from '../../firebase';
 import * as routes from '../../constants/routes';
 
+
+
 const SignUpPage = ({ history }) =>
-  <div>
-    <SignUpForm history={history} />
-  </div>
+  <Grid>
+    <Row>
+      <Col sm={4} smOffset={4}>
+        <SignUpForm history={history} />
+      </Col>
+    </Row>
+  </Grid>
 
 const updateByPropertyName = (propertyName, value) => () => ({
   [propertyName]: value,
@@ -79,13 +85,13 @@ class SignUpForm extends Component {
       email === '';
 
     return (
-      <center className="mt-4">
-        <div className="col-sm-4">          
+      <center>
+        <div className="signup">          
           <h3>Please SignUp !! </h3>
           <hr/>
           <Form onSubmit={this.onSubmit}>
             <FormGroup>
-              <Input 
+              <FormControl 
                 value={username}
                 onChange={event => this.setState(updateByPropertyName('username', event.target.value))}
                 type="text"
@@ -94,7 +100,7 @@ class SignUpForm extends Component {
             </FormGroup>
             
             <FormGroup>
-              <Input
+              <FormControl
                 value={email}
                 onChange={event => this.setState(updateByPropertyName('email', event.target.value))}
                 type="text"
@@ -103,7 +109,7 @@ class SignUpForm extends Component {
             </FormGroup>
 
             <FormGroup>
-              <Input
+              <FormControl
                 value={passwordOne}
                 onChange={event => this.setState(updateByPropertyName('passwordOne', event.target.value))}
                 type="password"
@@ -112,7 +118,7 @@ class SignUpForm extends Component {
             </FormGroup>
 
             <FormGroup>
-              <Input
+              <FormControl
                 value={passwordTwo}
                 onChange={event => this.setState(updateByPropertyName('passwordTwo', event.target.value))}
                 type="password"
@@ -120,7 +126,7 @@ class SignUpForm extends Component {
               />
             </FormGroup>
 
-            <Button color="success" style={{float:'left'}} disabled={isInvalid} type="submit">
+            <Button bsStyle="success" disabled={isInvalid} type="submit">
               Sign Up
             </Button>
             { error && <Alert color="danger">{error.message}</Alert> }

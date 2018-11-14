@@ -4,11 +4,11 @@ import StockSearch from '../Shared/StockSearch';
 import NewsPanel from './NewsPanel/index'
 import NvisionSignUp from './NvisionSignUp'
 import Adavance from './Adavance'
-import { Row, Col , Container} from 'reactstrap';
+import { Row, Col , Grid} from 'react-bootstrap';
 import AuthUserContext from '../Session/AuthUserContext';
 
 const Dashboard = ({ handleSubmit, symbol }) => (
-  <Container>
+  <Grid>
     <StockSearch handleSubmit={handleSubmit} symbol={symbol} />
     <Row>
       <Col md="8">
@@ -34,7 +34,7 @@ const Dashboard = ({ handleSubmit, symbol }) => (
         </AuthUserContext.Consumer>     
       </Col>
     </Row>
-  </Container>
+  </Grid>
 )
 
 export default Dashboard;

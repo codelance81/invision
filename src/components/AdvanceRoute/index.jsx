@@ -1,13 +1,13 @@
 import React from 'react';
-import { Container } from 'reactstrap';
+import { Grid } from 'react-bootstrap';
 import StockSearch from '../Shared/StockSearch';
 import HistoricalPrice from './Historical_Price';
 
 const AdavanceFeatures = ({ handleSubmit, symbol }) => (
-  <Container>
+  <Grid>
     <StockSearch handleSubmit={handleSubmit} symbol={symbol} />
     <HistoricalPrice symbol={symbol} />
-  </Container>
+  </Grid>
 )
 
 export default AdavanceFeatures;

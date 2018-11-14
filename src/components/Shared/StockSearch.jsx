@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col } from 'reactstrap';
+import { Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import Select from 'react-virtualized-select';
 import createFilterOptions from 'react-select-fast-filter-options';

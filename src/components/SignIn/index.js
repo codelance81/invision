@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Button, Form, FormGroup, Input,Alert } from 'reactstrap';
+import { Button,Grid, Row,Form,Col, FormGroup, FormControl,Alert } from 'react-bootstrap';
 import { SignUpLink } from '../SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
 import { auth } from '../../firebase';
 
 const SignInPage = ({ history }) =>
-  <center className="mt-4">
-    <div className="col-sm-4"> 
-      <SignInForm history={history} />
-      <PasswordForgetLink />
-      <SignUpLink />
-    </div>
-  </center>
+  <Grid>
+    <center>
+      <Row>
+        <Col sm={4} smOffset={4}> 
+          <SignInForm history={history} />
+          <PasswordForgetLink />
+          <SignUpLink />
+        </Col>
+      </Row>
+    </center>
+  </Grid>
 
 const updateByPropertyName = (propertyName, value) => () => ({
   [propertyName]: value,
@@ -65,7 +69,7 @@ class SignInForm extends Component {
         <hr/>
         <Form onSubmit={this.onSubmit}>
           <FormGroup>
-            <Input type="email"
+            <FormControl type="email"
               name="email" 
               value={email}
               placeholder="Email address" 
@@ -73,20 +77,19 @@ class SignInForm extends Component {
             />            
           </FormGroup>
           <FormGroup>
-            <Input
+            <FormControl
               value={password}
               onChange={event => this.setState(updateByPropertyName('password', event.target.value))}
               type="password"
               placeholder="Password"
           />
           </FormGroup>
-          <Button color="success" disabled={isInvalid} type="submit">
+          <Button bsStyle="success" disabled={isInvalid} type="submit">
             Sign In 
             </Button>
         </Form>
         { error && <Alert color="danger">{error.message}</Alert> }
-      </div>
-     
+      </div>   
     );
   }
 }

@@ -4,9 +4,8 @@ import {
   Navbar,
   NavbarBrand,
   Nav,
-  NavLink,
   NavItem
- } from 'reactstrap';
+ } from 'react-bootstrap';
  import * as routes from '../../constants/routes'
  import { auth } from '../../firebase/firebase'
  import AuthUserContext from '../Session/AuthUserContext'
@@ -23,17 +22,17 @@ import {
       <Nav>
         <NavItem>
           <LinkContainer to={routes.SIGN_IN}>
-            <NavLink>SignIn</NavLink>
+            <span>SignIn</span>
           </LinkContainer>
         </NavItem>
         <NavItem>
           <LinkContainer to={routes.SIGN_UP}>
-            <NavLink>SignUp</NavLink>
+            <span>SignUp</span>
           </LinkContainer>
         </NavItem>
         <NavItem>
           <LinkContainer to={routes.DASHBOARD}>
-            <NavLink>Dashboard</NavLink>
+            <span>Dashboard</span>
           </LinkContainer>
         </NavItem>
       </Nav>
@@ -46,11 +45,11 @@ import {
       <Nav>
         <NavItem>
           <LinkContainer to={routes.DASHBOARD}>
-            <NavLink>Dashboard</NavLink>
+            <span>Dashboard</span>
           </LinkContainer>
         </NavItem>
         <NavItem>
-          <NavLink onClick={this.handleLogout}>Logout</NavLink>
+          <span onClick={this.handleLogout}>Logout</span>
         </NavItem>
       </Nav>
     )
@@ -61,7 +60,7 @@ import {
       <div>
         <Navbar color="light" light expand="md">
           <NavbarBrand>N-Vision</NavbarBrand>
-            <Nav className="ml-auto" navbar>
+            <Nav className="navbar-right" navbar>
               <AuthUserContext.Consumer>
                 {(isLoggedIn) => (
                   <React.Fragment>

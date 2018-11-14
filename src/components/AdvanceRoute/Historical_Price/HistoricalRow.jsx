@@ -10,7 +10,12 @@ const HistoricalRow = ({data}) => (
         <HistoricalColumn data={data} key={`td${i}`}/>
       ))
     }
-    <td>{data.yearlyAverage}</td>
+    
+    {data.yearlyAverage < 0 ? 
+      <td className="historical-row-red">{data.yearlyAverage}%</td>
+      : <td className="historical-row-green">+{data.yearlyAverage}%</td>
+    }
+
   </tr>
 )
 

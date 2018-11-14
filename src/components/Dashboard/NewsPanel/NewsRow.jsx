@@ -1,7 +1,7 @@
 import React from 'react';
 import Moment from 'react-moment';
 import { truncate } from 'lodash';
-import { Row, Col } from 'reactstrap';
+import { Row, Col } from 'react-bootstrap';
 
 class NewsRow extends React.Component { 
   constructor() {
