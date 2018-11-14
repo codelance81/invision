@@ -15,7 +15,7 @@ class NewsPanel extends React.Component {
 
   componentDidMount(){
     const { symbol } = this.props
-    this.setState ({
+    !this.isCancelled && this.setState ({
       symbol: symbol
     }, () => {
       this.gettingFetch();
@@ -26,19 +26,23 @@ class NewsPanel extends React.Component {
   componentWillReceiveProps(nextProps){
     const { symbol } = this.state;
     if(symbol !== nextProps.symbol){
-      this.setState ({
+      !this.isCancelled && this.setState ({
         symbol: nextProps.symbol
       },() => {
         this.gettingFetch();
       })
     }
   }
+
+  componentWillUnmount() {
+    this.isCancelled = true;
+  }
   
   gettingFetch = () => {
     const {symbol} = this.state
     axios.get('https://api.iextrading.com/1.0/stock/'+symbol +'/news')
     .then(res => {
-      this.setState({
+      !this.isCancelled && this.setState({
         newsArray: res.data
       })
     })

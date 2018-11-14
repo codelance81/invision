@@ -9,34 +9,12 @@ import {
  } from 'reactstrap';
  import * as routes from '../../constants/routes'
  import { auth } from '../../firebase/firebase'
+ import AuthUserContext from '../Session/AuthUserContext'
 
  class Header extends React.Component {
-  constructor(){
-    super();
-    this.state={
-      isLoggedIn:false
-    }
-  }
-  componentDidMount(){   
-    this.authListener();
-  }
 
   handleLogout = () =>{
     auth.signOut();
-  }
-
-  authListener = () => {    
-    auth.onAuthStateChanged((user) => {
-      if(user){
-        this.setState({
-          isLoggedIn:true
-        })
-      } else{
-        this.setState({
-          isLoggedIn:false
-        })
-      }
-    });
   }
 
   renderLogin = (isLoggedIn) =>{
@@ -79,14 +57,19 @@ import {
   }
 
   render() {
-    const {isLoggedIn} = this.state;
     return (
       <div>
         <Navbar color="light" light expand="md">
           <NavbarBrand>N-Vision</NavbarBrand>
             <Nav className="ml-auto" navbar>
-              { this.renderLogin(isLoggedIn) }
-              { this.renderLogout(isLoggedIn) }
+              <AuthUserContext.Consumer>
+                {(isLoggedIn) => (
+                  <React.Fragment>
+                  { this.renderLogin(isLoggedIn) }
+                  { this.renderLogout(isLoggedIn) }
+                  </React.Fragment> 
+                )}
+              </AuthUserContext.Consumer>
             </Nav>
         </Navbar>
       </div>

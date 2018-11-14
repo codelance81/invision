@@ -1,12 +1,12 @@
 import React from 'react';
-import { Row, Col, Container} from 'reactstrap';
+import { Row, Col } from 'reactstrap';
 import axios from 'axios';
 import Select from 'react-virtualized-select';
 import createFilterOptions from 'react-select-fast-filter-options';
+import { forEach, isEmpty } from 'lodash';
 import 'react-select/dist/react-select.css';
 import 'react-virtualized/styles.css'
 import 'react-virtualized-select/styles.css'
-import { forEach, isEmpty } from 'lodash';
 
 class StockSearch extends React.Component {
   constructor(props) {
@@ -20,7 +20,7 @@ class StockSearch extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     axios.get('https://api.iextrading.com/1.0/ref-data/symbols')
       .then(res => {
         const data = res.data;							
@@ -31,11 +31,15 @@ class StockSearch extends React.Component {
             label: symbol.symbol
           })
         })
-        this.setState({ allSymbols: allSymbols });
+        !this.isCancelled && this.setState({ allSymbols: allSymbols });
       })
       .catch(err => {
         console.log(err);
       })
+  }
+
+  componentWillUnmount() {
+    this.isCancelled = true;
   }
 
   handleChange = (symbol) => {

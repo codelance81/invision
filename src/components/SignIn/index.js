@@ -4,7 +4,6 @@ import { Button, Form, FormGroup, Input,Alert } from 'reactstrap';
 import { SignUpLink } from '../SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
 import { auth } from '../../firebase';
-import * as routes from '../../constants/routes';
 
 const SignInPage = ({ history }) =>
   <center className="mt-4">
@@ -38,14 +37,9 @@ class SignInForm extends Component {
       password,
     } = this.state;
 
-    const {
-      history,
-    } = this.props;
-
     auth.doSignInWithEmailAndPassword(email, password)
       .then(() => {
         this.setState(() => ({ ...INITIAL_STATE }));
-        history.push('/dashboard');
       })
       .catch(error => {
         this.setState(updateByPropertyName('error', error));

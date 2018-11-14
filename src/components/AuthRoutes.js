@@ -2,48 +2,23 @@ import React from 'react'
 import {Route, Redirect} from 'react-router-dom'
 import { includes } from 'lodash'
 import * as routes from '../constants/routes'
-import {auth} from '../firebase/firebase'
+import AuthUserContext from '../components/Session/AuthUserContext'
 
-class AuthRoutes extends React.Component{
-  constructor(){
-    super();
-    this.state={
-      isLoggedIn:false
-    }
-  }
-  componentDidMount(){   
-    this.authListener();
-  }
-
-  authListener(){    
-    auth.onAuthStateChanged((user) => {
-      if(user){
-        this.setState({
-          isLoggedIn:true
-        })
-      } else{
-        this.setState({
-          isLoggedIn:false
-        })
+const AuthRoutes = ({ path, component }) => (
+  <AuthUserContext.Consumer>
+    {
+      (isLoggedIn) => {
+        if(isLoggedIn && includes([routes.SIGN_IN,routes.SIGN_UP], path)){
+          return <Redirect to={routes.DASHBOARD}/>
+        }
+        else if (!isLoggedIn && includes([routes.ADAVANCED_FEATURES], path)){
+          return <Redirect to={routes.SIGN_IN}/>
+        }
+        return <Route path={path} component={component}/>
       }
-    });
-  }
-
- 
-
-  render(){
-    const {isLoggedIn} = this.state  
-    const {path, component} = this.props;
-    const allRoutes = routes;
-    if(isLoggedIn && includes([allRoutes.SIGN_IN,allRoutes.SIGN_UP], path)){
-      return <Redirect to={allRoutes.DASHBOARD}/>
     }
-    // else if (!isLoggedIn && includes([allRoutes.ADAVANCED_FEATURES], path)){
-    //   return <Redirect to={allRoutes.SIGN_IN}/>
-    // }
-    return <Route path={path} component={component}/>
-  }
-}
+  </AuthUserContext.Consumer>
+)
 
 export default AuthRoutes
 
