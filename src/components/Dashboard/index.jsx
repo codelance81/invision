@@ -6,22 +6,27 @@ import NvisionSignUp from './NvisionSignUp'
 import Adavance from './Adavance'
 import { Row, Col , Grid} from 'react-bootstrap';
 import AuthUserContext from '../Session/AuthUserContext';
+import OptionsChainPrice from './OptionsChainPrice/index';
+
 
 const Dashboard = ({ handleSubmit, symbol }) => (
   <Grid>
     <StockSearch handleSubmit={handleSubmit} symbol={symbol} />
     <Row>
-      <Col md="8">
+      <Col md={8}>
         <div className="main-chart">
           <TradingViewWidget 
             range="60m"
             symbol={symbol} height="400" width="100%"
-          />
+        />
         </div>
         <div className="chain-price">
+          <OptionsChainPrice 
+            symbol={symbol}
+          />
         </div>
       </Col>
-      <Col md="4">
+      <Col md={4}>
         <div className="news-container">
           <NewsPanel symbol={symbol} />
         </div>

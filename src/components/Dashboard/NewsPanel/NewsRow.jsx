@@ -16,7 +16,7 @@ class NewsRow extends React.Component {
     const { data } = this.props;  
     return (
       <Row>
-        <Col md="12">
+        <Col md={12}>
           <div className="news-card">
             <small>
               <Moment format = "YYYY/MM/DD">

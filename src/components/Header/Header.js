@@ -58,7 +58,7 @@ import {
   render() {
     return (
       <div>
-        <Navbar color="light" light expand="md">
+        <Navbar color="light"  expand="md">
           <NavbarBrand>N-Vision</NavbarBrand>
             <Nav className="navbar-right" navbar>
               <AuthUserContext.Consumer>

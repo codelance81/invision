@@ -54,6 +54,9 @@ body {
 .landing-block.left .row .col-md-6:first-child {
   order: 1;
 }
+/* .landing-block.left .row .col-md-6:first-child {
+  text-align: left
+} */
 .landing-block img {
   width: 100%;
 }

@@ -63,7 +63,7 @@ class StockSearch extends React.Component {
     }
     return (
       <Row className="search-company" >
-        <Col lg="12">
+        <Col lg={12}>
           <div className="search-symbol mt-4">
             <Select
               value={symbol}

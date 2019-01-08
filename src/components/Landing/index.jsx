@@ -12,9 +12,11 @@ const LandingPage = () => {
             <h6>{data.summary}</h6>
           </center>
         </Col>
-        <Col md="6">
-          <img src={data.image} alt="na" />
-        </Col>
+         <div>
+          <Col md="6">
+            <img src={data.image} alt="na" />
+          </Col>
+        </div>
       </Row>
     </div>
   ))
@@ -28,4 +30,7 @@ const LandingPage = () => {
 }
 
 export default LandingPage;
+
+
+
 
