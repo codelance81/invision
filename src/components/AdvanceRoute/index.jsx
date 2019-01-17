@@ -3,10 +3,15 @@ import { Grid } from 'react-bootstrap';
 import StockSearch from '../Shared/StockSearch';
 import HistoricalPrice from './Historical_Price';
 
-const AdavanceFeatures = ({ handleSubmit, symbol }) => (
+const AdavanceFeatures = (props) => (
   <Grid>
-    <StockSearch handleSubmit={handleSubmit} symbol={symbol} />
-    <HistoricalPrice symbol={symbol} />
+    <StockSearch
+      handleSubmit={props.handleSubmit}
+      symbol={props.symbol}
+      allSymbols={props.allSymbols}
+      symbolName={props.symbolName}
+    />
+    <HistoricalPrice symbol={props.symbol} />
   </Grid>
 )
 

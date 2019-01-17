@@ -12,7 +12,8 @@ section .section-title {
     text-transform: uppercase;
 }
 #footer {
-    background: #698881 !important;
+    background: #3c3c3c;
+    color: #fff;
 }
 #footer h5{
 	padding-left: 10px;

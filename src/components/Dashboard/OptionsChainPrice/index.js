@@ -1,12 +1,12 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
-import { map, isEmpty } from 'lodash';
+import { map, isEmpty, filter } from 'lodash';
 import axios from 'axios';
-import { OptionsChainCallsHeader, OptionsChainPutsHeader } from './OptionsChainHeader';
-import { OptionsChainCallsRow, OptionsChainPutsRow } from './OptionsChainRow';
+import OptionsChainHeader from './OptionsChainHeader';
+import OptionsChainRow from './OptionsChainRow';
 import { Row, Col } from 'react-bootstrap';
-import Moment from 'moment';
-import DatePicker from 'react-datepicker';
+import Select from 'react-select';
+import { Scrollbars } from 'react-custom-scrollbars';
 import 'react-datepicker/dist/react-datepicker.css';
 
 class OptionsChainPrice extends React.Component{
@@ -14,100 +14,122 @@ class OptionsChainPrice extends React.Component{
     super();
     this.state = {
       data: [],
-      fromDate: new Date(),  
       isLoading: true,
+      expirationDateArray:[],
+      expirationDate: null
     }
   }
   
   componentDidMount(){
-    this.fetchingOptionsChainPrice();
+    this.mount = true
+    this.fetchingExpirationDate();
   }
 
-  handleDateChange = (date) => {
-    const formattedDate = Moment(date).format('YYYY-MM-DD').toString();
-    this.setState({ fromDate: formattedDate },() => {
-      this.fetchingOptionsChainPrice();
+  componentWillUnmount() {
+    this.mount = false;
+  }
+
+  fetchingExpirationDate = () => {
+    const { symbol } = this.props;
+    axios.get('https://sandbox.tradier.com/v1/markets/options/expirations',{
+      headers:{
+        Authorization: 'Bearer DGhGKzBEFen4Sq8priL536krXQIK',
+        Accept: 'application/json'
+      },
+      params:{
+        symbol: symbol,
+      }
+    })
+    .then(res => {
+      !isEmpty(res.data.expirations) ? 
+      this.handleExpiryDatesGetOptionChain(res.data.expirations.date):
+      this.mount && this.setState({ isLoading: false })
     });
+  };
+  
+  handleExpiryDatesGetOptionChain = (expiryDates) => {
+    const allDate =  [];
+    map(expiryDates, (date) => {
+      const dataObj = {};
+      dataObj.value = date;
+      dataObj.label = date;
+      allDate.push(dataObj);
+    })
+    if (this.mount) {
+      this.setState({ 
+        expirationDateArray: allDate,
+        expirationDate: expiryDates[0]
+      }, () => {
+        this.fetchingOptionsChainPrice();
+      });
+    }
   }
 
   fetchingOptionsChainPrice = () => {
     const { symbol } = this.props;
-    const { fromDate } = this.state;
-    axios.get('https://api.tdameritrade.com/v1/marketdata/chains',{
+    const { expirationDate } = this.state;
+    axios.get('https://sandbox.tradier.com/v1/markets/options/chains',{
+      headers:{
+        Authorization: 'Bearer DGhGKzBEFen4Sq8priL536krXQIK',
+        Accept: 'application/json'
+      },
       params:{
         symbol: symbol,
-        apikey: 'INVISION123',
-        range: 'NTM',
-        fromDate: fromDate,
-        optionType: 'S'
+        expiration: expirationDate,
       }
     })
     .then(res => {
       this.setState({
-        data: res ,
+        data: res.data.options ,
         isLoading: false
       })
     })
   }
 
+  handleDateChange = (selectedDate) => {
+    this.setState({ expirationDate: selectedDate.value }, () => {
+      this.fetchingOptionsChainPrice();
+    });
+  }
+  
   render(){
-    const { data, fromDate, isLoading } = this.state;
+    const { data, isLoading, expirationDate, expirationDateArray } = this.state;
+    const call_data =  !isEmpty(data) && filter(data.option, { option_type: 'call' });
+    const put_data = !isEmpty(data) && filter(data.option, { option_type: 'put' });
     if(isLoading){
       return(
         <h2>Loding data...</h2>
       )
     }
+    const isDataAvailable = (!isEmpty(call_data) && !isEmpty(put_data))
     return(
-      <div>
-        <h3>Options chain price</h3>   
-        <span style={{fontWeight: 'bold'}}>From date</span>
-        <DatePicker
-          selected={fromDate}
+      <div className="common-container">
+        <h3 className="common-heading">Options chain price ({isDataAvailable && call_data[0].underlying})</h3> 
+        <h4>Select expiration date</h4>  
+        <Select
+          value={expirationDate}
           onChange={this.handleDateChange}
-        />       
+          options={expirationDateArray}
+        />
         <Row>
-          <Col md={6}>
-            <span>Calls Options</span>
-            <Table className="table-responsive historical-price-data">
-              <OptionsChainCallsHeader />
-              <tbody>
-                {
-                  (!isEmpty(data) && !isEmpty(data.data) && !isEmpty(data.data.callExpDateMap))
-                  ?
-                  map(data.data.callExpDateMap, date => (
-                    map(date, dataRow => (
-                      map(dataRow, (data, index) => (
-                        <OptionsChainCallsRow data={data} key={index} />
-                      ))
-                    ))
-                  ))
-                  :
-                  <tr><td>No data available</td></tr>
-                } 
-              </tbody>
-            </Table> 
-          </Col>
-
-          <Col md={6}>
-            <span>Puts Options</span>
-            <Table className="table-responsive historical-price-data">
-              <OptionsChainPutsHeader />
-              <tbody>
-                {
-                  (!isEmpty(data) && !isEmpty(data.data) && !isEmpty(data.data.putExpDateMap))
-                  ?
-                  map(data.data.putExpDateMap, date => (
-                    map(date, dataRow => (
-                      map(dataRow, (data, index) => (
-                        <OptionsChainPutsRow data={data} key={index} />
-                      ))
-                    ))
-                  ))
-                  :
-                  <tr><td>No data available</td></tr>
-                } 
-              </tbody>
-            </Table> 
+          <Col md={12}>
+            <Scrollbars style={{ height: 500, width: '100%' }}>
+              <Table className="table-responsive table-bordered historical-price-data">
+                <OptionsChainHeader />
+                <tbody>
+                  {
+                    isDataAvailable ? (
+                    map(call_data, (callData, index) => (                    
+                      <OptionsChainRow
+                        callData={callData}
+                        key={index}
+                        putData={put_data[index]}
+                      />                                       
+                    ))):<tr><td colSpan="15">No data available</td></tr>
+                  } 
+                </tbody>
+              </Table>
+            </Scrollbars>
           </Col>
         </Row>
       </div>
@@ -116,4 +138,3 @@ class OptionsChainPrice extends React.Component{
 }
 
 export default OptionsChainPrice;
-

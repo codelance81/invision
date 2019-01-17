@@ -9,12 +9,10 @@ import ReactLoading from 'react-loading';
 class HistoricalPrice extends React.Component {
   constructor() {
     super();
-
     this.state = {
       historicalData: [], 
       isLoading: true
     }
-
     this.convertData = this.convertData.bind(this);
   }
 
@@ -24,7 +22,6 @@ class HistoricalPrice extends React.Component {
       .then(res => {
         this.convertData(res);
         this.setState({ isLoading: false})
-
       }).catch(err => {
         console.log(err);
       })
@@ -45,16 +42,15 @@ class HistoricalPrice extends React.Component {
       yearMonthKeys.push(dataObj);
     });
 
-    yearSorted = groupBy(yearMonthKeys, 'year');
-
+    yearSorted = groupBy(yearMonthKeys, 'year'); //sort data year wise
     map(yearSorted, (data) => {
-      const monthlyData = groupBy(data, 'month');
-      
+      const monthlyData = groupBy(data, 'month');     
       for(let i = 0; i < 12; i++ ) {
         if(isEmpty(monthlyData[i])) {
           monthlyData[i] = 'NA';
         } else {
-          monthlyData[i] = monthlyData[i][monthlyData[i].length - 1].close;
+          //get last close data of month
+          monthlyData[i] = monthlyData[i][monthlyData[i].length - 1].close; 
         }
       }
 
@@ -62,17 +58,15 @@ class HistoricalPrice extends React.Component {
       for( let i = 0; i < data.length; i++ ){
         sum += parseFloat(data[i].changePercent);
       }
-
       const avg = (sum/data.length).toFixed(3);
       yearSorted[data[0].year] = { monthlyData: monthlyData, yearlyAverage: avg, year: data[0].year };
-    })
-    
-    this.setState({ historicalData: yearSorted })
+    })   
+    this.setState({ historicalData: yearSorted });
   }
 
 
   render() {
-    const { historicalData ,isLoading} = this.state;
+    const { historicalData, isLoading} = this.state;  
     if (isLoading) {
       return(
         <center>
@@ -84,19 +78,22 @@ class HistoricalPrice extends React.Component {
       ) 
     }
     return (
-      <Table className="table-responsive historical-price-data">
-        <HistoricalHeader />
-        <tbody>
-          { !isEmpty(historicalData) ? (
-              map(historicalData, (data, index) => (
-                <HistoricalRow data={data} key={index} />
-              ))
-            ) : (
-              <tr><td className="text-center" colSpan="14">No data</td></tr>
-            )
-          }
-        </tbody>
-      </Table>
+      <div className="common-container">
+        <h3 className="common-heading">Historical Price ({this.props.symbol}) <span className="common-splitter">(5 Years data)</span></h3>
+        <Table className="table-responsive historical-price-data">
+          <HistoricalHeader />
+          <tbody>
+            { !isEmpty(historicalData) ? (
+                map(historicalData, (data, index) => (
+                  <HistoricalRow data={data} key={index} />
+                ))
+              ) : (
+                <tr><td className="text-center" colSpan="14">No data</td></tr>
+              )
+            }
+          </tbody>
+        </Table>
+      </div>
     )
   }
 }

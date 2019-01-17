@@ -1,33 +1,21 @@
 import React from 'react';
 
-const OptionsChainCallsRow = ({data}) => (
-  <tr>
-    <td>{data.last}</td>
-    <td>{data.netChange}</td>
-    <td>{data.bid}</td>
-    <td>{data.ask}</td>
-    <td>{data.totalVolume}</td>
-    <td>{data.openInterest}</td>
-    <td>{data.strikePrice}</td>
+const OptionsChainRow = ({callData, putData}) => (
+  <tr style={{height:30}}>
+    <td>{callData.last}</td>
+    <td>{callData.change}</td>
+    <td>{callData.bid}</td>
+    <td>{callData.ask}</td>
+    <td>{callData.volume}</td>
+    <td>{callData.open_interest}</td>
+    <td className="strike-row">{callData.strike}</td>
+    <td>{putData.last}</td>
+    <td>{putData.change}</td>
+    <td>{putData.bid}</td>
+    <td>{putData.ask}</td>
+    <td>{putData.volume}</td>
+    <td>{putData.open_interest}</td>
   </tr>
 )
 
-const OptionsChainPutsRow = ({data}) => (
-  <tr>
-    <td>{data.last}</td>
-    <td>{data.netChange}</td>
-    <td>{data.bid}</td>
-    <td>{data.ask}</td>
-    <td>{data.totalVolume}</td>
-    <td>{data.openInterest}</td>
-    <td>{data.strikePrice}</td>
-  </tr> 
-)
-
-export { 
-  OptionsChainCallsRow,
-  OptionsChainPutsRow
-};
-
-
-
+export default OptionsChainRow;

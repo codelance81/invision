@@ -2,9 +2,9 @@ import React from 'react'
 import axios from 'axios'
 import { isEmpty, map } from 'lodash'
 import NewsRow from './NewsRow'
+import { Scrollbars } from 'react-custom-scrollbars';
 
 class NewsPanel extends React.Component {
-  
   constructor(){
     super();
     this.state = {
@@ -50,9 +50,7 @@ class NewsPanel extends React.Component {
       console.log(err);
     })
   }
-
-  
-
+ 
   render(){
     const { newsArray } = this.state
     if(isEmpty(newsArray)) {
@@ -60,14 +58,13 @@ class NewsPanel extends React.Component {
     };
     return(
       <div className="news-panel">
-        <h1>news feed</h1>
-        <div className="newsList">
+        <h2 className="common-heading">news feed</h2>
+        <Scrollbars autoHide style={{ height: 300, width: '100%' }} className="newsList">
           { map(newsArray, news => <NewsRow key={news.datetime} data={news}/> )}
-        </div>
+        </Scrollbars>
       </div>
     )
   }
 }
-
 
 export default NewsPanel;

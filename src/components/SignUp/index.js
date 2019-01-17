@@ -3,7 +3,7 @@ import {
   Link,
   withRouter,
 } from 'react-router-dom';
-import { Button, Form, Grid, Row, Col,FormGroup,FormControl,Alert } from 'react-bootstrap';
+import { Button, Form, Grid, Row, Col,FormGroup,FormControl,Alert, Panel } from 'react-bootstrap';
 
 import { auth, db } from '../../firebase';
 import * as routes from '../../constants/routes';
@@ -14,7 +14,12 @@ const SignUpPage = ({ history }) =>
   <Grid>
     <Row>
       <Col sm={4} smOffset={4}>
-        <SignUpForm history={history} />
+        <Panel className="panel-success">
+          <Panel.Heading>Sign In</Panel.Heading>
+          <Panel.Body>
+            <SignUpForm history={history} />
+          </Panel.Body>
+        </Panel>
       </Col>
     </Row>
   </Grid>
@@ -86,8 +91,7 @@ class SignUpForm extends Component {
 
     return (
       <center>
-        <div className="signup">          
-          <h3>Please SignUp !! </h3>
+        <div className="signup">
           <hr/>
           <Form onSubmit={this.onSubmit}>
             <FormGroup>

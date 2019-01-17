@@ -6,9 +6,11 @@ import {
   Nav,
   NavItem
  } from 'react-bootstrap';
- import * as routes from '../../constants/routes'
- import { auth } from '../../firebase/firebase'
- import AuthUserContext from '../Session/AuthUserContext'
+import * as routes from '../../constants/routes';
+import { auth } from '../../firebase/firebase';
+import AuthUserContext from '../Session/AuthUserContext';
+
+import '../../assests/stylesheets/header.css';
 
  class Header extends React.Component {
 
@@ -20,21 +22,21 @@ import {
     if(isLoggedIn) { return null };
     return (
       <Nav>
-        <NavItem>
-          <LinkContainer to={routes.SIGN_IN}>
+        <LinkContainer to={routes.SIGN_IN}>
+          <NavItem>
             <span>SignIn</span>
-          </LinkContainer>
-        </NavItem>
-        <NavItem>
-          <LinkContainer to={routes.SIGN_UP}>
+          </NavItem>
+        </LinkContainer>
+        <LinkContainer to={routes.SIGN_UP}>
+          <NavItem>
             <span>SignUp</span>
-          </LinkContainer>
-        </NavItem>
-        <NavItem>
-          <LinkContainer to={routes.DASHBOARD}>
+          </NavItem>
+        </LinkContainer>
+        <LinkContainer to={routes.DASHBOARD}>
+          <NavItem>
             <span>Dashboard</span>
-          </LinkContainer>
-        </NavItem>
+          </NavItem>
+        </LinkContainer>
       </Nav>
     )
   }
@@ -43,11 +45,11 @@ import {
     if(!isLoggedIn) { return null };
     return (
       <Nav>
-        <NavItem>
-          <LinkContainer to={routes.DASHBOARD}>
+        <LinkContainer to={routes.DASHBOARD}>
+          <NavItem>
             <span>Dashboard</span>
-          </LinkContainer>
-        </NavItem>
+          </NavItem>
+        </LinkContainer>
         <NavItem>
           <span onClick={this.handleLogout}>Logout</span>
         </NavItem>
@@ -58,18 +60,20 @@ import {
   render() {
     return (
       <div>
-        <Navbar color="light"  expand="md">
-          <NavbarBrand>N-Vision</NavbarBrand>
-            <Nav className="navbar-right" navbar>
-              <AuthUserContext.Consumer>
-                {(isLoggedIn) => (
-                  <React.Fragment>
-                  { this.renderLogin(isLoggedIn) }
-                  { this.renderLogout(isLoggedIn) }
-                  </React.Fragment> 
-                )}
-              </AuthUserContext.Consumer>
-            </Nav>
+        <Navbar color="light" expand="md" fixedTop className="header-custom">
+          <LinkContainer to={routes.LANDING}>
+            <a><NavbarBrand>IN-<strong>Vision</strong></NavbarBrand></a>
+          </LinkContainer>
+          <Nav className="navbar-right" navbar>
+            <AuthUserContext.Consumer>
+              {(isLoggedIn) => (
+                <React.Fragment>
+                { this.renderLogin(isLoggedIn) }
+                { this.renderLogout(isLoggedIn) }
+                </React.Fragment> 
+              )}
+            </AuthUserContext.Consumer>
+          </Nav>
         </Navbar>
       </div>
     );

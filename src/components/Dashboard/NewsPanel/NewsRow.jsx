@@ -26,7 +26,7 @@ class NewsRow extends React.Component {
             <h3>{ data.headline }</h3>
             { data.summary.length > 120 ? (
               <React.Fragment>
-                { isTruncate ? <p>{truncate(data.summary, { length: 120 })}</p> : <p>{data.summary}</p> }
+                { isTruncate ? <p>{truncate(data.summary, { length: 60 })}</p> : <p>{data.summary}</p> }
                 <button className="btn btn-sm btn-info" onClick={ () => { this.setState({ truncate: !isTruncate })} }>
                   { isTruncate ? 'View more' : 'View less' }
                 </button>

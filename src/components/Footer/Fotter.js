@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../assests/style/footer.css'
+import '../../assests/stylesheets/footer.css'
 import { Grid } from 'react-bootstrap'
 
 

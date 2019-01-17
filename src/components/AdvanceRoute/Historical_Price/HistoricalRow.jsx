@@ -9,13 +9,12 @@ const HistoricalRow = ({data}) => (
       map(data.monthlyData, (data, i) => (
         <HistoricalColumn data={data} key={`td${i}`}/>
       ))
-    }
-    
-    {data.yearlyAverage < 0 ? 
+    }    
+    {
+      data.yearlyAverage < 0 ? 
       <td className="historical-row-red">{data.yearlyAverage}%</td>
       : <td className="historical-row-green">+{data.yearlyAverage}%</td>
     }
-
   </tr>
 )
 

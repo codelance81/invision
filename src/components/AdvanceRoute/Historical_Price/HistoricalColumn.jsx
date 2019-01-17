@@ -9,7 +9,7 @@ const HistoricalColumn = ({data}) => (
         'close-price-data' : true,
         'red': isEqual('NA', data)
       })}
-    >{data}</div>
+    >{isEqual(data, 'NA') ? data : '$'+data}</div>
   </td>
 
 )

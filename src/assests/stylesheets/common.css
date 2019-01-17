@@ -1,13 +1,10 @@
-@import 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900';
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700,900');
 
 body {
-  font-family: 'Roboto', sans-serif !important;
-}
-.search-company{
-  margin-bottom: 30px;
+  font-family: 'Lato', sans-serif !important;
 }
 .newsList{
-  height: 400px;
+  height: 300px;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -46,10 +43,6 @@ body {
   text-transform: uppercase;
   font-size: 18px;
   background: #f3f3f3;
-}
-
-.adavance ,.nVisionSignUp{
-  margin-top: 30px;
 }
 .landing-block.left .row .col-md-6:first-child {
   order: 1;
@@ -98,4 +91,72 @@ body {
 
 .historical-row-green {
   color: green;
+}
+
+.app {
+  padding: 81px 0 0;
+}
+.align-items-center {
+  display: flex;
+  align-items: center;
+}
+.landing-block .row {
+  margin-bottom: 30px;
+}
+.landing-block .row .col-md-6 {
+  flex: 0 0 50%;
+}
+.landing-block h3 {
+  font-size: 44px;
+  font-weight: 900;
+  color: #7cca64;
+}
+.landing-block p {
+  font-size: 24px;
+  font-weight: 300;
+}
+.landing-content {
+  max-width: 400px;
+  margin: 0 auto;
+}
+.common-heading {
+  font-size: 30px;
+  text-transform: capitalize;
+  font-weight: 900;
+  color: #7cca64;
+  margin: 0 0 10px;
+}
+.with-bg {
+  background: #f3f3f3;
+}
+.common-container {
+  padding: 30px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 1px 1px 5px rgba(51, 51, 51, 0.14);
+  margin-bottom: 30px;
+}
+.common-splitter {
+  color: #cacaca;
+  font-size: 18px;
+}
+.react-datepicker-wrapper, .react-datepicker__input-container {
+  width: 100%;
+  vertical-align: middle;
+}
+.react-datepicker-wrapper .form-control {
+  height: 40px;
+}
+
+.addition-detail .row{
+  margin-bottom: 15px;
+}
+.addition-detail .row h5{
+  margin: 0;
+}
+
+.addition-detail .row span{
+  font-size: 12px;
+  font-weight: 200;
+
 }

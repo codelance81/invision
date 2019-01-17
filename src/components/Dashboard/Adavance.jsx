@@ -1,19 +1,17 @@
-import React from 'react'
-import { Panel } from 'react-bootstrap';
-import { Link } from 'react-router-dom'
-import  * as routes from '../../constants/routes' 
-
+import React from 'react';
+import { Link } from 'react-router-dom';
+import  * as routes from '../../constants/routes' ;
 
 const Adavance = () => (
   <div className="adavance"> 
-    <Panel>
-      <Panel.Heading>Adavance Features</Panel.Heading>
-      <Panel.Body>
+    <div>
+      <h3 className="common-heading">Adavance Features</h3>
+      <p>
         Click for special features acess
         i.e. historical price, analyse etc.
-      </Panel.Body>
+      </p>
       <Link className="btn btn-success" to={routes.ADAVANCED_FEATURES}>ADAVANCED FEATURES</Link>
-    </Panel>
+    </div>
   </div>
 )
 

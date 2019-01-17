@@ -7,16 +7,16 @@ const LandingPage = () => {
     <div className={'landing-block ' + data.order}>
       <Row className="align-items-center mt-4">
         <Col md="6">
-          <center>
-            <h1>{data.title}</h1>
-            <h6>{data.summary}</h6>
-          </center>
+          <div className="landing-content">
+            <h3>{data.title}</h3>
+            <p>{data.summary}</p>
+          </div>
         </Col>
-         <div>
-          <Col md="6">
+        <Col md="6">
+          <div>
             <img src={data.image} alt="na" />
-          </Col>
-        </div>
+          </div>
+        </Col>
       </Row>
     </div>
   ))
