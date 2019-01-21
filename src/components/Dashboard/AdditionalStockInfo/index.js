@@ -5,11 +5,15 @@ import { isEmpty, merge } from 'lodash';
 
 class AdditionalStockInfo extends React.Component{
 
-  state = {
-    data1:[],
-    data2:[],
-    data3:[]
+  constructor(){
+    super();
+    this.state = {
+      data1:[],
+      data2:[],
+      data3:[]
+    }
   }
+  
   componentDidMount() {
     this.mounted = true;
     const { symbol } = this.props;
@@ -27,11 +31,11 @@ class AdditionalStockInfo extends React.Component{
         this.setState({ data1: res.data }, () => {
           this.fetchingAdditionalStockInfoCall2(symbol, () => {
             this.fetchingAdditionalStockInfoCall3(symbol);
-          })
-        })
-      }
-    })   
-  }
+          });
+        });
+      };
+    });   
+  };
 
   fetchingAdditionalStockInfoCall2 = (symbol, callback) => {
     axios.get(`https://api.iextrading.com/1.0/stock/${symbol}/stats`)
@@ -40,23 +44,23 @@ class AdditionalStockInfo extends React.Component{
         this.setState({data2: res.data}, () => {
           callback();
         });
-      }
+      };
     }).catch(err => {
       console.log(err);
       return false;
-    })
-  }
+    });
+  };
 
   fetchingAdditionalStockInfoCall3 = (symbol) => {
     axios.get(`https://api.iextrading.com/1.0/stock/${symbol}/company`)
     .then(res => {
       if (this.mounted) {
         this.setState({ data3: res.data})
-      }
+      };
     }).catch(err => {
       console.log(err);
-    })
-  }
+    });
+  };
 
   render(){
     const { data1, data2, data3 } = this.state    

@@ -6,7 +6,6 @@ import { Row, Col } from 'react-bootstrap';
 class NewsRow extends React.Component { 
   constructor() {
     super();
-
     this.state = {
       truncate: true,
     }

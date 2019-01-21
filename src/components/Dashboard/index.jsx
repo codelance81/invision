@@ -10,6 +10,7 @@ import OptionsChainPrice from './OptionsChainPrice/index';
 import AdditionalStockInfo from './AdditionalStockInfo/index';
 import HistoricalPrice from '../AdvanceRoute/Historical_Price/index';
 import MiniChart from './MiniChart/index';
+import FutureNews from './NewsPanel/FutureNews/index';
 
 const Dashboard = (props) => (
   <Grid>
@@ -20,23 +21,26 @@ const Dashboard = (props) => (
           <h3 className="common-heading">Trading View</h3>
           <TradingViewWidget 
             range="60m"
-            symbol={props.symbol} height="418" width="100%"
+            symbol={props.symbol} height="350" width="100%"
             symbolName={props.symbolName}
-          />
+          />          
         </div>
-      </Col>
-      <Col md={6}>
-        <div className="news-container common-container">
-          <AdditionalStockInfo symbol={props.symbol} />
-        </div>
-        <MiniChart />
         <AuthUserContext.Consumer>
           {(isLoggedIn) => (
             <div className="nvision-signup common-container">
               {!isLoggedIn ? (<NvisionSignUp/> ) : (<Adavance/>)}
             </div>
           )}
-        </AuthUserContext.Consumer>     
+        </AuthUserContext.Consumer>  
+        <NewsPanel symbol={props.symbol} />
+      </Col>
+      <Col md={6}>
+        <div className="news-container common-container">
+          <h3 className="common-heading">Additional Stock Information</h3>
+          <AdditionalStockInfo symbol={props.symbol} />
+        </div>
+        <MiniChart />
+        <FutureNews />    
       </Col>
     </Row>
     <Row>

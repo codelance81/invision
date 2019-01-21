@@ -113,7 +113,7 @@ class OptionsChainPrice extends React.Component{
         />
         <Row>
           <Col md={12}>
-            <Scrollbars style={{ height: 500, width: '100%' }}>
+            <Scrollbars style={{ height: 400, width: '100%' }}>
               <Table className="table-responsive table-bordered historical-price-data">
                 <OptionsChainHeader />
                 <tbody>

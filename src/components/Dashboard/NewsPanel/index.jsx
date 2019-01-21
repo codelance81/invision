@@ -2,14 +2,15 @@ import React from 'react'
 import axios from 'axios'
 import { isEmpty, map } from 'lodash'
 import NewsRow from './NewsRow'
+import FutureNews from './FutureNews/index';
 import { Scrollbars } from 'react-custom-scrollbars';
 
 class NewsPanel extends React.Component {
   constructor(){
     super();
     this.state = {
-      newsArray:'',
-      symbol:''
+      newsArray: '',
+      symbol: ''
     }
   }
 
@@ -19,8 +20,7 @@ class NewsPanel extends React.Component {
       symbol: symbol
     }, () => {
       this.gettingFetch();
-    })
-    
+    })   
   }
 
   componentWillReceiveProps(nextProps){
@@ -62,6 +62,7 @@ class NewsPanel extends React.Component {
         <Scrollbars autoHide style={{ height: 300, width: '100%' }} className="newsList">
           { map(newsArray, news => <NewsRow key={news.datetime} data={news}/> )}
         </Scrollbars>
+        <FutureNews />
       </div>
     )
   }
