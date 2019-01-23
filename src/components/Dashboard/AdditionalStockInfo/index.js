@@ -67,6 +67,7 @@ class AdditionalStockInfo extends React.Component{
     const data = merge(data1,data2,data3)
     return(       
       <Row className="addition-detail">
+        <h3 className="common-heading">Additional Stock Information</h3>
         <Col md={4}>
           <Row>
             <span>EXCHANGE</span>

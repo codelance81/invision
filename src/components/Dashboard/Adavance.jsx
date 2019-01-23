@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import  * as routes from '../../constants/routes' ;
+import * as routes from '../../constants/routes' ;
 
 const Adavance = () => (
-  <div className="adavance"> 
+  <div className="adavance" style={{height:220}}> 
     <div>
       <h3 className="common-heading">Adavance Features</h3>
       <p>

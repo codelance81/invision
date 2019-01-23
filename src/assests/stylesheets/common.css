@@ -160,3 +160,6 @@ body {
   font-weight: 200;
 
 }
+.item-active {
+  background: #fbf3c9;
+}

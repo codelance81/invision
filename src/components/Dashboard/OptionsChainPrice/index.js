@@ -1,6 +1,5 @@
 import React from 'react';
-import { Table } from 'react-bootstrap';
-import { map, isEmpty, filter } from 'lodash';
+import { map, isEmpty, filter, orderBy } from 'lodash';
 import axios from 'axios';
 import OptionsChainHeader from './OptionsChainHeader';
 import OptionsChainRow from './OptionsChainRow';
@@ -16,7 +15,8 @@ class OptionsChainPrice extends React.Component{
       data: [],
       isLoading: true,
       expirationDateArray:[],
-      expirationDate: null
+      expirationDate: null,
+      marketPrice: null,
     }
   }
   
@@ -60,9 +60,24 @@ class OptionsChainPrice extends React.Component{
         expirationDateArray: allDate,
         expirationDate: expiryDates[0]
       }, () => {
-        this.fetchingOptionsChainPrice();
+        this.fetchingMarketPriceOfSymbol().then(() => {
+          this.fetchingOptionsChainPrice();
+        })
       });
     }
+  }
+
+  fetchingMarketPriceOfSymbol = () => {
+    const { symbol } = this.props;
+    return axios.get(`https://api.iextrading.com/1.0/stock/${symbol}/price`)
+      .then(res => {
+        if(this.mount){
+          this.setState({ marketPrice: res.data });
+        }       
+        return true;
+      }).catch(() => {
+        return false;
+      });
   }
 
   fetchingOptionsChainPrice = () => {
@@ -79,10 +94,13 @@ class OptionsChainPrice extends React.Component{
       }
     })
     .then(res => {
-      this.setState({
-        data: res.data.options ,
-        isLoading: false
-      })
+      if(this.mount){
+        this.setState({
+          data: res.data.options ,
+          isLoading: false
+        })
+      }
+      
     })
   }
 
@@ -93,15 +111,21 @@ class OptionsChainPrice extends React.Component{
   }
   
   render(){
-    const { data, isLoading, expirationDate, expirationDateArray } = this.state;
+    const { data, isLoading, expirationDate, expirationDateArray, marketPrice } = this.state;
     const call_data =  !isEmpty(data) && filter(data.option, { option_type: 'call' });
     const put_data = !isEmpty(data) && filter(data.option, { option_type: 'put' });
+    let callDataOrdered = [];
+    let putDataOrdered = [];
+    if (!isEmpty(call_data) && !isEmpty(put_data)) {
+      callDataOrdered = orderBy(call_data, ['strike'], ['asc']);
+      putDataOrdered = orderBy(put_data, ['strike'], ['asc']);
+    }
     if(isLoading){
       return(
         <h2>Loding data...</h2>
       )
     }
-    const isDataAvailable = (!isEmpty(call_data) && !isEmpty(put_data))
+    const isDataAvailable = (!isEmpty(callDataOrdered) && !isEmpty(putDataOrdered))
     return(
       <div className="common-container">
         <h3 className="common-heading">Options chain price ({isDataAvailable && call_data[0].underlying})</h3> 
@@ -113,22 +137,19 @@ class OptionsChainPrice extends React.Component{
         />
         <Row>
           <Col md={12}>
+            <OptionsChainHeader />
             <Scrollbars style={{ height: 400, width: '100%' }}>
-              <Table className="table-responsive table-bordered historical-price-data">
-                <OptionsChainHeader />
-                <tbody>
-                  {
-                    isDataAvailable ? (
-                    map(call_data, (callData, index) => (                    
-                      <OptionsChainRow
-                        callData={callData}
-                        key={index}
-                        putData={put_data[index]}
-                      />                                       
-                    ))):<tr><td colSpan="15">No data available</td></tr>
-                  } 
-                </tbody>
-              </Table>
+              {
+                isDataAvailable ? (
+                map(callDataOrdered, (callData, index) => (                    
+                  <OptionsChainRow
+                    callData={callData}
+                    key={index}
+                    putData={putDataOrdered[index]}
+                    marketPrice={marketPrice}
+                  />                                       
+                ))) : <tr><td colSpan="15">No data available</td></tr>
+              }             
             </Scrollbars>
           </Col>
         </Row>

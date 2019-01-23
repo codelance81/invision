@@ -10,6 +10,7 @@ import OptionsChainPrice from './OptionsChainPrice/index';
 import AdditionalStockInfo from './AdditionalStockInfo/index';
 import HistoricalPrice from '../AdvanceRoute/Historical_Price/index';
 import MiniChart from './MiniChart/index';
+
 import FutureNews from './NewsPanel/FutureNews/index';
 
 const Dashboard = (props) => (
@@ -23,7 +24,7 @@ const Dashboard = (props) => (
             range="60m"
             symbol={props.symbol} height="350" width="100%"
             symbolName={props.symbolName}
-          />          
+          />
         </div>
         <AuthUserContext.Consumer>
           {(isLoggedIn) => (
@@ -36,11 +37,12 @@ const Dashboard = (props) => (
       </Col>
       <Col md={6}>
         <div className="news-container common-container">
-          <h3 className="common-heading">Additional Stock Information</h3>
           <AdditionalStockInfo symbol={props.symbol} />
         </div>
-        <MiniChart />
-        <FutureNews />    
+        <div className="mini-chart common-container">
+          <MiniChart symbol={props.symbol} /> 
+        </div>
+        <FutureNews />
       </Col>
     </Row>
     <Row>
@@ -59,5 +61,4 @@ const Dashboard = (props) => (
     </Row>
   </Grid>
 )
-
 export default Dashboard;

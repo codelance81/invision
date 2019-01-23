@@ -17,6 +17,7 @@ class HistoricalPrice extends React.Component {
   }
 
   componentDidMount() {
+    this.mount = true;
     const { symbol } = this.props;
     axios.get(`https://api.iextrading.com/1.0/stock/${symbol}/chart/5y`)
       .then(res => {
@@ -26,7 +27,9 @@ class HistoricalPrice extends React.Component {
         console.log(err);
       })
   }
-
+  componentWillUnmount() {
+    this.mount = false;
+  }
   convertData(res){
     const rawData = res.data;
     const yearMonthKeys = [];
@@ -61,7 +64,7 @@ class HistoricalPrice extends React.Component {
       const avg = (sum/data.length).toFixed(3);
       yearSorted[data[0].year] = { monthlyData: monthlyData, yearlyAverage: avg, year: data[0].year };
     })   
-    this.setState({ historicalData: yearSorted });
+    this.mount && this.setState({ historicalData: yearSorted });
   }
 
 

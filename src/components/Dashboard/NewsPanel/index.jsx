@@ -62,7 +62,6 @@ class NewsPanel extends React.Component {
         <Scrollbars autoHide style={{ height: 300, width: '100%' }} className="newsList">
           { map(newsArray, news => <NewsRow key={news.datetime} data={news}/> )}
         </Scrollbars>
-        <FutureNews />
       </div>
     )
   }

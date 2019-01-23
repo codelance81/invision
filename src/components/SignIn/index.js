@@ -64,6 +64,7 @@ class SignInForm extends Component {
         this.setState(() => ({ ...INITIAL_STATE }));
       })
       .catch(error => {
+        this.setState({ isDiscalimer: false });
         this.setState(updateByPropertyName('error', error));
       });
 
