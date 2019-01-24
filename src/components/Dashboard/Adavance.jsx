@@ -10,7 +10,7 @@ const Adavance = () => (
         Click for special features acess
         i.e. historical price, analyse etc.
       </p>
-      <Link className="btn btn-success" to={routes.ADAVANCED_FEATURES}>ADAVANCED FEATURES</Link>
+      <Link className="btn btn-success" to={routes.ADAVANCED_FEATURES} style={{marginTop:50}}>ADAVANCED FEATURES</Link>
     </div>
   </div>
 )

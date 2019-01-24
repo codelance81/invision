@@ -3,10 +3,10 @@ import { Row, Col } from 'react-bootstrap';
 
 const OptionsChainHeader = () => (
 
-  <Row md={12}>
+  <Row>
 
-    <Col md={5}>
-      <Row md={12}>
+    <Col md={6}>
+      <Row>
         <Col md={2}>
           <span>Last</span>
         </Col>
@@ -29,13 +29,13 @@ const OptionsChainHeader = () => (
     </Col>
 
     <Col md={1}>
-      <Row md={12}>
+      <Row>
         <span>Strike</span>
       </Row>
     </Col>
 
     <Col md={5}>
-      <Row md={12}>
+      <Row>
         <Col md={2}>
           <span>Last</span>
         </Col>

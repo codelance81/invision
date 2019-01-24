@@ -2,7 +2,6 @@ import React from 'react'
 import axios from 'axios'
 import { isEmpty, map } from 'lodash'
 import NewsRow from './NewsRow'
-import FutureNews from './FutureNews/index';
 import { Scrollbars } from 'react-custom-scrollbars';
 
 class NewsPanel extends React.Component {
@@ -57,7 +56,7 @@ class NewsPanel extends React.Component {
       return <h3>No news available</h3>
     };
     return(
-      <div className="news-panel">
+      <div>
         <h2 className="common-heading">news feed</h2>
         <Scrollbars autoHide style={{ height: 300, width: '100%' }} className="newsList">
           { map(newsArray, news => <NewsRow key={news.datetime} data={news}/> )}

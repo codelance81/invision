@@ -8,56 +8,60 @@ const OptionsChainRow = ({callData, putData, marketPrice}) => {
   const itmCall = callData.strike < marketPrice;
   const callClass = classnames({ 'item-active': itmCall });
   const putClass = classnames({ 'item-active': itmPut });
+
+
+
+  const style=  "background:'yellow'";
   return (
-    <Row md={12}>
-      <Col md={5}>
-        <Row md={12}>
-          <Col md={2}>
-            <span className={callClass}>{!isNull(callData.last) ? callData.last : '-'}</span>
+    <Row>
+      <Col md={6} className={callClass}>
+        <Row>
+          <Col md={2} >
+            <span >{!isNull(callData.last) ? callData.last : '-'}</span>
           </Col>
           <Col md={2}>
-            <span className={callClass}>{!isNull(callData.change) ? callData.change: '-'}</span>
+            <span className=''>{!isNull(callData.change) ? callData.change: '-'}</span>
           </Col>
           <Col md={2}>
-            <span className={callClass}>{!isNull(callData.bid) ? callData.bid : '-'}</span>
+            <span className=''>{!isNull(callData.bid) ? callData.bid : '-'}</span>
           </Col>
           <Col md={2}>
-            <span className={callClass}>{!isNull(callData.ask) ? callData.ask : '-'}</span>
+            <span className=''>{!isNull(callData.ask) ? callData.ask : '-'}</span>
           </Col>
           <Col md={2}>
-            <span className={callClass}>{!isNull(callData.volume) ? callData.volume: '-'}</span>
+            <span className=''>{!isNull(callData.volume) ? callData.volume: '-'}</span>
           </Col>
           <Col md={2}>
-            <span className={callClass}>{!isNull(callData.open_interest) ? callData.open_interest : '-'}</span>
+            <span className=''>{!isNull(callData.open_interest) ? callData.open_interest : '-'}</span>
           </Col>
         </Row>
       </Col>
       
       <Col md={1}>
-        <Row md={12}>
+        <Row>
           <span>{callData.strike}</span>
         </Row>
       </Col>
 
-        <Col md={5}>
-          <Row md={12}>
+        <Col md={5} className={putClass}>
+          <Row>
             <Col md={2}>
-              <span className={putClass}>{!isNull(putData.last) ? putData.last : '-'}</span>
+              <span >{!isNull(putData.last) ? putData.last : '-'}</span>
             </Col>
             <Col md={2}>
-              <span className={putClass}>{!isNull(putData.change) ? putData.change : '-'}</span>
+              <span className=''>{!isNull(putData.change) ? putData.change : '-'}</span>
             </Col>
             <Col md={2}>
-              <span className={putClass}>{!isNull(putData.bid) ? putData.bid : '-'}</span>
+              <span className=''>{!isNull(putData.bid) ? putData.bid : '-'}</span>
             </Col>
             <Col md={2}>
-              <span className={putClass}>{!isNull(putData.ask) ? putData.ask : '-'}</span>
+              <span className=''>{!isNull(putData.ask) ? putData.ask : '-'}</span>
             </Col>
             <Col md={2}>
-              <span className={putClass}>{!isNull(putData.volume) ? putData.volume : '-'}</span>
+              <span className=''>{!isNull(putData.volume) ? putData.volume : '-'}</span>
             </Col>
             <Col md={2}>
-              <span className={putClass}>{!isNull(putData.open_interest) ? putData.open_interest : '-'}</span>
+              <span className=''>{!isNull(putData.open_interest) ? putData.open_interest : '-'}</span>
             </Col>
           </Row>
         </Col>

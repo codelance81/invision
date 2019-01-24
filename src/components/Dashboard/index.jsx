@@ -33,21 +33,26 @@ const Dashboard = (props) => (
             </div>
           )}
         </AuthUserContext.Consumer>  
-        <NewsPanel symbol={props.symbol} />
+        <div className="news-container common-container">
+          <NewsPanel symbol={props.symbol} />
+        </div>
       </Col>
       <Col md={6}>
-        <div className="news-container common-container">
+        <div className="additional-stock-container common-container">
           <AdditionalStockInfo symbol={props.symbol} />
         </div>
         <div className="mini-chart common-container">
           <MiniChart symbol={props.symbol} /> 
         </div>
-        <FutureNews />
+        <div className="future-news-container common-container">
+          <FutureNews />
+        </div>
+
       </Col>
     </Row>
     <Row>
       <Col md={12}>
-        <div className="chain-price">
+        <div className="chain-price ommon-container">
           <OptionsChainPrice symbol={props.symbol} />
         </div>
       </Col>
