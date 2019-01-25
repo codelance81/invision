@@ -2,6 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import { Table } from 'react-bootstrap';
 import { map, groupBy, isEmpty } from 'lodash';
+import Scrollbars from 'react-custom-scrollbars';
+
 import HistoricalHeader from './HistoricalHeader';
 import HistoricalRow from './HistoricalRow';
 import ReactLoading from 'react-loading';
@@ -83,19 +85,21 @@ class HistoricalPrice extends React.Component {
     return (
       <div className="common-container">
         <h3 className="common-heading">Historical Price ({this.props.symbol}) <span className="common-splitter">(5 Years data)</span></h3>
-        <Table className="table-responsive historical-price-data">
-          <HistoricalHeader />
-          <tbody>
-            { !isEmpty(historicalData) ? (
-                map(historicalData, (data, index) => (
-                  <HistoricalRow data={data} key={index} />
-                ))
-              ) : (
-                <tr><td className="text-center" colSpan="14">No data</td></tr>
-              )
-            }
-          </tbody>
-        </Table>
+        <Scrollbars autoHide style={{ height: 300, width: '100%'}}>
+          <Table className="table-responsive historical-price-data">
+            <HistoricalHeader />
+            <tbody>
+              { !isEmpty(historicalData) ? (
+                  map(historicalData, (data, index) => (
+                    <HistoricalRow data={data} key={index} />
+                  ))
+                ) : (
+                  <tr><td className="text-center" colSpan="14">No data</td></tr>
+                )
+              }
+            </tbody>
+          </Table>
+        </Scrollbars>
       </div>
     )
   }

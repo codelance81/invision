@@ -135,24 +135,28 @@ class OptionsChainPrice extends React.Component{
           onChange={this.handleDateChange}
           options={expirationDateArray}
         />
-        <Row>
-          <Col md={12}>
-            <OptionsChainHeader />
-            <Scrollbars style={{ height: 400, width: '100%' }}>
-              {
-                isDataAvailable ? (
-                map(callDataOrdered, (callData, index) => (                    
-                  <OptionsChainRow
-                    callData={callData}
-                    key={index}
-                    putData={putDataOrdered[index]}
-                    marketPrice={marketPrice}
-                  />                                       
-                ))) : <tr><td colSpan="15">No data available</td></tr>
-              }             
-            </Scrollbars>
-          </Col>
-        </Row>
+        <Scrollbars style={{ height: 500, width: '100%' }}>
+          <div className="option-chain-table" style={{ width: '1079px' }}>
+            <Row>
+              <Col md={12}>
+                <OptionsChainHeader />
+                <Scrollbars autoHide style={{ height: 400, width: '100%' }}>
+                  {
+                    isDataAvailable ? (
+                    map(callDataOrdered, (callData, index) => (                    
+                      <OptionsChainRow
+                        callData={callData}
+                        key={index}
+                        putData={putDataOrdered[index]}
+                        marketPrice={marketPrice}
+                      />                                       
+                    ))) : <tr><td colSpan="15">No data available</td></tr>
+                  }             
+                </Scrollbars>
+              </Col>
+            </Row>
+          </div>
+        </Scrollbars>
       </div>
     )
   }

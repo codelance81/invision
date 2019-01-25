@@ -160,6 +160,56 @@ body {
   font-weight: 200;
 
 }
-.item-active {
+.option-chain-table .col-xs-2 span {
+  padding: 5px 10px;
+  display: block;
+}
+.item-active .col-xs-2 span {
   background: #fbf3c9;
+  display: block;
+}
+.option-chain-table {
+  margin-top: 30px;
+  border: 1px solid rgba(51, 51, 51, 0.28);
+  border-left: none;
+}
+.option-chain-table .row {
+  margin: 0px;
+}
+.option-chain-table .col-xs-6,
+.option-chain-table .col-md-12,
+.option-chain-table .col-xs-5,
+.option-chain-table .col-xs-1 {
+  padding: 0px;
+}
+.option-chain-table .col-xs-2 {
+  padding: 0;
+  text-align: center;
+  border-bottom: 1px solid rgba(51, 51, 51, 0.28);
+  border-left: 1px solid rgba(51, 51, 51, 0.28);
+  height: 30px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.option-header span {
+  font-weight: 700;
+}
+.option-header-type .col-xs-5 {
+  padding: 5px 10px;
+  font-size: 18px;
+  font-weight: 700;
+  border-bottom: 1px solid rgba(51, 51, 51, 0.28);
+  border-left: 1px solid rgba(51, 51, 51, 0.28);
+}
+.option-header-type .col-xs-5:first-child {
+  border-right: 1px solid rgba(51, 51, 51, 0.28);
+}
+@media screen and (max-width: 767px) {
+  .header-custom .navbar-right {
+    padding: 0 15px;
+  }
+  .small-block {
+    display: block;
+  }
 }

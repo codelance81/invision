@@ -21,7 +21,7 @@ import '../../assests/stylesheets/header.css';
   renderLogin = (isLoggedIn) =>{
     if(isLoggedIn) { return null };
     return (
-      <Nav>
+      <Nav navbar pullRight>
         <LinkContainer to={routes.SIGN_IN}>
           <NavItem>
             <span>SignIn</span>
@@ -44,7 +44,7 @@ import '../../assests/stylesheets/header.css';
   renderLogout = (isLoggedIn) =>{
     if(!isLoggedIn) { return null };
     return (
-      <Nav>
+      <Nav navbar pullRight>
         <LinkContainer to={routes.DASHBOARD}>
           <NavItem>
             <span>Dashboard</span>
@@ -61,10 +61,13 @@ import '../../assests/stylesheets/header.css';
     return (
       <div>
         <Navbar color="light" expand="md" fixedTop className="header-custom">
-          <LinkContainer to={routes.LANDING}>
-            <a><NavbarBrand>IN-<strong>Vision</strong></NavbarBrand></a>
-          </LinkContainer>
-          <Nav className="navbar-right" navbar>
+          <Navbar.Header>
+            <LinkContainer to={routes.LANDING}>
+              <a><NavbarBrand>IN-<strong>Vision</strong></NavbarBrand></a>
+            </LinkContainer>
+            <Navbar.Toggle />
+          </Navbar.Header>
+          <Navbar.Collapse>
             <AuthUserContext.Consumer>
               {(isLoggedIn) => (
                 <React.Fragment>
@@ -73,7 +76,7 @@ import '../../assests/stylesheets/header.css';
                 </React.Fragment> 
               )}
             </AuthUserContext.Consumer>
-          </Nav>
+          </Navbar.Collapse>
         </Navbar>
       </div>
     );

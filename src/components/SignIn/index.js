@@ -112,11 +112,11 @@ class SignInForm extends Component {
           <div className="static-modal">
             <Modal.Dialog>
               <Modal.Header>
-                <Modal.Title>Invision Condition</Modal.Title>
+                <Modal.Title>Disclaimer</Modal.Title>
               </Modal.Header>
 
               <Modal.Body style={{'max-height': 'calc(100vh - 210px)', 'overflow-y': 'auto'}} >
-                <h3>1. YOUR AGREEMENT</h3>
+                <h3>Important Instructions</h3>
                 <span>
                   We are NOT financial advisors. ALL data provided is for educational or entertainment purposes only and should be treated as such. Information provided through Invision does not constitute a recommendation to execute ANY trade.
                 </span>
