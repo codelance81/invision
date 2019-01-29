@@ -205,6 +205,12 @@ body {
 .option-header-type .col-xs-5:first-child {
   border-right: 1px solid rgba(51, 51, 51, 0.28);
 }
+@media screen and (max-width: 400px) and (min-width: 300px){
+  .stock-info-contain{
+    width: 100%;
+    float:left;
+  }
+}
 @media screen and (max-width: 767px) {
   .header-custom .navbar-right {
     padding: 0 15px;

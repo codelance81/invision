@@ -4,14 +4,14 @@ import StockSearch from '../Shared/StockSearch';
 import NewsPanel from './NewsPanel/index';
 import NvisionSignUp from './NvisionSignUp';
 import Adavance from './Adavance';
-import { Row, Col , Grid} from 'react-bootstrap';
+import { Row, Col, Grid } from 'react-bootstrap';
 import AuthUserContext from '../Session/AuthUserContext';
 import OptionsChainPrice from './OptionsChainPrice/index';
 import AdditionalStockInfo from './AdditionalStockInfo/index';
 import HistoricalPrice from '../AdvanceRoute/Historical_Price/index';
 import MiniChart from './MiniChart/index';
-
 import FutureNews from './NewsPanel/FutureNews/index';
+import ForecastInfo from './ForecastInfo/index';
 
 const Dashboard = (props) => (
   <Grid>
@@ -52,7 +52,7 @@ const Dashboard = (props) => (
     </Row>
     <Row>
       <Col md={12}>
-        <div className="chain-price ommon-container">
+        <div className="chain-price common-container">
           <OptionsChainPrice symbol={props.symbol} />
         </div>
       </Col>
@@ -61,6 +61,13 @@ const Dashboard = (props) => (
       <Col md={12}>
         <div className="historical-price">
           <HistoricalPrice symbol={props.symbol} />
+        </div>
+      </Col>
+    </Row>
+    <Row>
+      <Col md={12}>
+        <div className="forecast-info">
+          <ForecastInfo symbol={props.symbol} />
         </div>
       </Col>
     </Row>

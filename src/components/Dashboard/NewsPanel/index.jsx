@@ -18,7 +18,7 @@ class NewsPanel extends React.Component {
     !this.isCancelled && this.setState ({
       symbol: symbol
     }, () => {
-      this.gettingFetch();
+      this.fetchingNews();
     })   
   }
 
@@ -28,7 +28,7 @@ class NewsPanel extends React.Component {
       !this.isCancelled && this.setState ({
         symbol: nextProps.symbol
       },() => {
-        this.gettingFetch();
+        this.fetchingNews();
       })
     }
   }
@@ -37,7 +37,7 @@ class NewsPanel extends React.Component {
     this.isCancelled = true;
   }
   
-  gettingFetch = () => {
+  fetchingNews = () => {
     const {symbol} = this.state
     axios.get('https://api.iextrading.com/1.0/stock/'+symbol +'/news')
     .then(res => {

@@ -127,7 +127,7 @@ class OptionsChainPrice extends React.Component{
     }
     const isDataAvailable = (!isEmpty(callDataOrdered) && !isEmpty(putDataOrdered))
     return(
-      <div className="common-container">
+      <div className="optionChain">
         <h3 className="common-heading">Options chain price ({isDataAvailable && call_data[0].underlying})</h3> 
         <h4>Select expiration date</h4>  
         <Select
