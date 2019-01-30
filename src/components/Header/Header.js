@@ -7,15 +7,17 @@ import {
   NavItem
  } from 'react-bootstrap';
 import * as routes from '../../constants/routes';
-import { auth } from '../../firebase/firebase';
-import AuthUserContext from '../Session/AuthUserContext';
-
 import '../../assests/stylesheets/header.css';
+import { connect } from 'react-redux';
+import { signOutUser } from '../../state/auth/operations';
+import { bindActionCreators } from 'redux';
 
- class Header extends React.Component {
 
-  handleLogout = () =>{
-    auth.signOut();
+class Header extends React.Component {
+
+  handleLogout = () => {
+    const { actions } = this.props;
+    actions.signOutUser();
   }
 
   renderLogin = (isLoggedIn) =>{
@@ -58,6 +60,7 @@ import '../../assests/stylesheets/header.css';
   }
 
   render() {
+    const { isLoggedIn } = this.props;
     return (
       <div>
         <Navbar color="light" expand="md" fixedTop className="header-custom">
@@ -67,15 +70,11 @@ import '../../assests/stylesheets/header.css';
             </LinkContainer>
             <Navbar.Toggle />
           </Navbar.Header>
-          <Navbar.Collapse>
-            <AuthUserContext.Consumer>
-              {(isLoggedIn) => (
-                <React.Fragment>
-                { this.renderLogin(isLoggedIn) }
-                { this.renderLogout(isLoggedIn) }
-                </React.Fragment> 
-              )}
-            </AuthUserContext.Consumer>
+          <Navbar.Collapse>         
+            <React.Fragment>
+            { this.renderLogin(isLoggedIn) }
+            { this.renderLogout(isLoggedIn) }
+            </React.Fragment>            
           </Navbar.Collapse>
         </Navbar>
       </div>
@@ -83,5 +82,15 @@ import '../../assests/stylesheets/header.css';
   }
 }
 
+const mapStateToProps = (state) => ({
+  isLoggedIn: state.auth.isAuthenticated
+});
 
-export default Header;
+
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators({
+    signOutUser,
+    }, dispatch),
+  });
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

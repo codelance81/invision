@@ -12,6 +12,7 @@ import HistoricalPrice from '../AdvanceRoute/Historical_Price/index';
 import MiniChart from './MiniChart/index';
 import FutureNews from './NewsPanel/FutureNews/index';
 // import ForecastInfo from './ForecastInfo/index';
+import { connect } from 'react-redux';
 
 const Dashboard = (props) => (
   <Grid>
@@ -26,13 +27,9 @@ const Dashboard = (props) => (
             symbolName={props.symbolName}
           />
         </div>
-        <AuthUserContext.Consumer>
-          {(isLoggedIn) => (
-            <div className="nvision-signup common-container">
-              {!isLoggedIn ? (<NvisionSignUp/> ) : (<Adavance/>)}
-            </div>
-          )}
-        </AuthUserContext.Consumer>  
+        <div className="nvision-signup common-container">
+          {!props.isLoggedIn ? (<NvisionSignUp/> ) : (<Adavance/>)}
+        </div>       
         <div className="news-container common-container">
           <NewsPanel symbol={props.symbol} />
         </div>
@@ -64,13 +61,12 @@ const Dashboard = (props) => (
         </div>
       </Col>
     </Row>
-    <Row>
-      <Col md={12}>
-        <div className="forecast-info">
-          {/* <ForecastInfo symbol={props.symbol} /> */}
-        </div>
-      </Col>
-    </Row>
   </Grid>
 )
-export default Dashboard;
+
+const mapStateToProps = (state) => ({
+  isLoggedIn: state.auth.isAuthenticated
+});
+
+
+export default connect(mapStateToProps, null)(Dashboard);

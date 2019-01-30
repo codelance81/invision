@@ -13,6 +13,9 @@ const authReducer = (state = initialState, actions) => {
         ...actions.data,
       }
 
+    case types.SET_AUTH_USER_ON_SIGNOUT:
+      return initialState;
+      
     default:
       return state;
   }
