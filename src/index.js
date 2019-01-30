@@ -3,25 +3,20 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
-import AuthUserContext from './components/Session/AuthUserContext';
-import { firebase } from '../src/firebase';
+import { PersistGate } from 'redux-persist/integration/react'
 
-let isLoggedIn = false;
+import { Provider } from 'react-redux'
+import { ConnectedRouter } from 'connected-react-router'
 
-const authListner = (callback) => {
-  firebase.auth.onAuthStateChanged(authUser => {
-    authUser ? isLoggedIn = true : isLoggedIn = false
-    callback();
-  });
-}
+import store, { history, persistor } from './store';
 
-authListner(function() {
-  ReactDOM.render(
-    <AuthUserContext.Provider value={isLoggedIn}>
-      <App />
-    </AuthUserContext.Provider>
-  , document.getElementById('root'));
-  registerServiceWorker();
-});
-
-
+ReactDOM.render(
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <ConnectedRouter history={history}>
+        <App />
+      </ConnectedRouter>
+    </PersistGate>
+  </Provider>
+, document.getElementById('root'));
+registerServiceWorker();

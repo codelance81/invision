@@ -11,7 +11,7 @@ import AdditionalStockInfo from './AdditionalStockInfo/index';
 import HistoricalPrice from '../AdvanceRoute/Historical_Price/index';
 import MiniChart from './MiniChart/index';
 import FutureNews from './NewsPanel/FutureNews/index';
-import ForecastInfo from './ForecastInfo/index';
+// import ForecastInfo from './ForecastInfo/index';
 
 const Dashboard = (props) => (
   <Grid>
@@ -67,7 +67,7 @@ const Dashboard = (props) => (
     <Row>
       <Col md={12}>
         <div className="forecast-info">
-          <ForecastInfo symbol={props.symbol} />
+          {/* <ForecastInfo symbol={props.symbol} /> */}
         </div>
       </Col>
     </Row>

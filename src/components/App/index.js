@@ -35,6 +35,11 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    
+    // firebase.auth.onAuthStateChanged(authUser => {
+    //   authUser ? isLoggedIn = true : isLoggedIn = false
+    // });
+
     axios.get('https://api.iextrading.com/1.0/ref-data/symbols')
       .then(res => {
         const data = res.data;				
