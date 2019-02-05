@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 class MiniChart extends React.Component {
 
@@ -21,4 +22,8 @@ class MiniChart extends React.Component {
   }
 }
 
-export default MiniChart;
+const mapStateToProps = (state) => ({
+  symbol: state.stocks.currentStockSymbol.currentSymbol,
+})
+
+export default connect(mapStateToProps, null)(MiniChart);

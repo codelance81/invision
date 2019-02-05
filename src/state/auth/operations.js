@@ -19,7 +19,6 @@ export const signInUser = (data) => (
 export const signOutUser = () => (
   (dispatch) => (
     auth.doSignOut().then(() => {
-      debugger
       dispatch(actions.signOutUserAction(null));
     },(err) => {
       console.log(err);

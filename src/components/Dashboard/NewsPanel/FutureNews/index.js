@@ -1,37 +1,20 @@
 import React from 'react';
-import axios from 'axios';
-import { parseString } from 'xml2js';
 import { map, isEmpty } from 'lodash';
 import { Scrollbars } from 'react-custom-scrollbars';
 import FutureNewsHeading from './FutureNewsHeading';
+import { setFutureNews } from '../../../../state/news/operation';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 class FutureNews extends React.Component {
-  
-  constructor(){
-    super();
-    this.state = {
-      futureNews:[]
-    }
-  }
 
   componentDidMount(){ 
-    this.mount = true; 
-    axios.get('https://www.investing.com/rss/news_11.rss')
-    .then(res => {  
-      parseString(res.data, (err, result) => {       
-        this.mount && this.setState({ futureNews: result });
-      });
-    }).catch(err => {    
-        console.log(err)
-    });
-  }
-
-  componentWillUnmount() {
-    this.mount = false;
+    const { actions } = this.props;
+    actions.setFutureNews();
   }
 
   render(){
-    const { futureNews } = this.state;
+    const { futureNews } = this.props;
     return(
       <div>
         <h3 className="common-heading">Future News</h3>
@@ -53,4 +36,17 @@ class FutureNews extends React.Component {
   }
 }
 
-export default FutureNews;
+const mapStateToProps = (state) => {
+  return({
+    futureNews: state.news.futureNews
+  })
+}
+
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators({
+    setFutureNews
+  },dispatch)
+})
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(FutureNews);

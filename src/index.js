@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
-import { PersistGate } from 'redux-persist/integration/react'
+import { PersistGate } from 'redux-persist/integration/react';
 
-import { Provider } from 'react-redux'
-import { ConnectedRouter } from 'connected-react-router'
+import { Provider } from 'react-redux';
+import { ConnectedRouter } from 'connected-react-router';
 
 import store, { history, persistor } from './store';
 

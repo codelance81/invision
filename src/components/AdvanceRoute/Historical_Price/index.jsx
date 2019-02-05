@@ -1,39 +1,47 @@
 import React from 'react';
-import axios from 'axios';
 import { Table } from 'react-bootstrap';
-import { map, groupBy, isEmpty } from 'lodash';
+import { map, groupBy, isEmpty, isEqual } from 'lodash';
 import Scrollbars from 'react-custom-scrollbars';
-
 import HistoricalHeader from './HistoricalHeader';
 import HistoricalRow from './HistoricalRow';
 import ReactLoading from 'react-loading';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { setHistoricalData } from '../../../state/historicalData/operations';
 
 class HistoricalPrice extends React.Component {
+
   constructor() {
     super();
     this.state = {
       historicalData: [], 
-      isLoading: true
+      isLoading: true,
+      symbol: ''
     }
     this.convertData = this.convertData.bind(this);
+    this.fetchingHistoricalData = this.fetchingHistoricalData.bind(this);
   }
 
   componentDidMount() {
-    this.mount = true;
-    const { symbol } = this.props;
-    axios.get(`https://api.iextrading.com/1.0/stock/${symbol}/chart/5y`)
-      .then(res => {
-        this.convertData(res);
-        this.setState({ isLoading: false})
-      }).catch(err => {
-        console.log(err);
-      })
+    this.fetchingHistoricalData();
   }
-  componentWillUnmount() {
-    this.mount = false;
+
+  componentDidUpdate(){
+    if(!isEqual(this.state.symbol, this.props.symbol)){
+      this.fetchingHistoricalData();
+    }
+  }  
+
+  fetchingHistoricalData(){
+    const { symbol, actions } = this.props;
+    this.setState({ symbol: symbol })
+    actions.setHistoricalData(symbol).then(res => {
+      this.convertData();
+    })
   }
-  convertData(res){
-    const rawData = res.data;
+
+  convertData(){
+   const rawData = this.props.historicalData.data
     const yearMonthKeys = [];
     let yearSorted;   
 
@@ -58,7 +66,6 @@ class HistoricalPrice extends React.Component {
           monthlyData[i] = monthlyData[i][monthlyData[i].length - 1].close; 
         }
       }
-
       let sum = 0;
       for( let i = 0; i < data.length; i++ ){
         sum += parseFloat(data[i].changePercent);
@@ -66,12 +73,14 @@ class HistoricalPrice extends React.Component {
       const avg = (sum/data.length).toFixed(3);
       yearSorted[data[0].year] = { monthlyData: monthlyData, yearlyAverage: avg, year: data[0].year };
     })   
-    this.mount && this.setState({ historicalData: yearSorted });
+    this.setState({ 
+      historicalData: yearSorted,
+      isLoading: false 
+    });
   }
 
-
   render() {
-    const { historicalData, isLoading} = this.state;  
+    const { isLoading, historicalData } = this.state; 
     if (isLoading) {
       return(
         <center>
@@ -105,4 +114,15 @@ class HistoricalPrice extends React.Component {
   }
 }
 
-export default HistoricalPrice;
+const mapStateToProps = (state) => ({
+  symbol: state.stocks.currentStockSymbol.currentSymbol,
+  historicalData: state.historicalData.historicalData
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators({
+    setHistoricalData
+  },dispatch)
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(HistoricalPrice);

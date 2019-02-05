@@ -1,139 +1,94 @@
 import React from 'react';
-import { map, isEmpty, filter, orderBy } from 'lodash';
-import axios from 'axios';
+import { map, isEmpty, isEqual } from 'lodash';
 import OptionsChainHeader from './OptionsChainHeader';
 import OptionsChainRow from './OptionsChainRow';
 import { Row, Col } from 'react-bootstrap';
 import Select from 'react-select';
 import { Scrollbars } from 'react-custom-scrollbars';
 import 'react-datepicker/dist/react-datepicker.css';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import {
+  setOptionsChainPrice,
+  setExpirationDate,
+  setMarketPriceOfSymbol,
+  setActiveExpiryDate,
+} from '../../../state/optionsChainPrice/operations';
+
 
 class OptionsChainPrice extends React.Component{
   constructor(){
     super();
     this.state = {
-      data: [],
       isLoading: true,
-      expirationDateArray:[],
-      expirationDate: null,
-      marketPrice: null,
     }
   }
   
   componentDidMount(){
-    this.mount = true
     this.fetchingExpirationDate();
   }
 
-  componentWillUnmount() {
-    this.mount = false;
-  }
-
-  fetchingExpirationDate = () => {
-    const { symbol } = this.props;
-    axios.get('https://sandbox.tradier.com/v1/markets/options/expirations',{
-      headers:{
-        Authorization: 'Bearer DGhGKzBEFen4Sq8priL536krXQIK',
-        Accept: 'application/json'
-      },
-      params:{
-        symbol: symbol,
-      }
-    })
-    .then(res => {
-      !isEmpty(res.data.expirations) ? 
-      this.handleExpiryDatesGetOptionChain(res.data.expirations.date):
-      this.mount && this.setState({ isLoading: false })
-    });
-  };
-  
-  handleExpiryDatesGetOptionChain = (expiryDates) => {
-    const allDate =  [];
-    map(expiryDates, (date) => {
-      const dataObj = {};
-      dataObj.value = date;
-      dataObj.label = date;
-      allDate.push(dataObj);
-    })
-    if (this.mount) {
-      this.setState({ 
-        expirationDateArray: allDate,
-        expirationDate: expiryDates[0]
-      }, () => {
-        this.fetchingMarketPriceOfSymbol().then(() => {
-          this.fetchingOptionsChainPrice();
-        })
+  componentDidUpdate(prevProps){
+    if(!isEqual(prevProps.symbol, this.props.symbol)){
+      this.setState({ isLoading: true }, () => {
+        this.fetchingExpirationDate();
       });
     }
   }
 
-  fetchingMarketPriceOfSymbol = () => {
-    const { symbol } = this.props;
-    return axios.get(`https://api.iextrading.com/1.0/stock/${symbol}/price`)
-      .then(res => {
-        if(this.mount){
-          this.setState({ marketPrice: res.data });
-        }       
-        return true;
-      }).catch(() => {
-        return false;
-      });
+  fetchingExpirationDate = () => {
+    const { symbol, actions } = this.props;
+    actions.setExpirationDate(symbol).then(res => {
+      if (res) {
+        this.handleExpiryDatesGetOptionChain();
+      } else {
+        this.setState({ isLoading: false });
+      }
+    });
+  };
+  
+  handleExpiryDatesGetOptionChain = () => {
+    this.fetchingMarketPriceOfSymbol().then(() => {
+      const { activeExpiryDate } = this.props;
+      this.fetchingOptionsChainPrice(activeExpiryDate);
+    })
   }
 
-  fetchingOptionsChainPrice = () => {
-    const { symbol } = this.props;
-    const { expirationDate } = this.state;
-    axios.get('https://sandbox.tradier.com/v1/markets/options/chains',{
-      headers:{
-        Authorization: 'Bearer DGhGKzBEFen4Sq8priL536krXQIK',
-        Accept: 'application/json'
-      },
-      params:{
-        symbol: symbol,
-        expiration: expirationDate,
-      }
+  fetchingMarketPriceOfSymbol = () => {
+    const { symbol, actions } = this.props;
+    return actions.setMarketPriceOfSymbol(symbol).then(() => {
+      return true;
     })
-    .then(res => {
-      if(this.mount){
-        this.setState({
-          data: res.data.options ,
-          isLoading: false
-        })
-      }
-      
+  }
+
+  fetchingOptionsChainPrice = (activeExpiryDate) => {
+    const { symbol, actions } = this.props;
+    actions.setOptionsChainPrice({ symbol: symbol, expirationDate: activeExpiryDate }).then(() => {
+      this.setState({ isLoading: false });
     })
   }
 
   handleDateChange = (selectedDate) => {
-    this.setState({ expirationDate: selectedDate.value }, () => {
-      this.fetchingOptionsChainPrice();
-    });
+    const { actions } = this.props;
+    actions.setActiveExpiryDate(selectedDate);
+    this.fetchingOptionsChainPrice(selectedDate.value);
   }
   
   render(){
-    const { data, isLoading, expirationDate, expirationDateArray, marketPrice } = this.state;
-    const call_data =  !isEmpty(data) && filter(data.option, { option_type: 'call' });
-    const put_data = !isEmpty(data) && filter(data.option, { option_type: 'put' });
-    let callDataOrdered = [];
-    let putDataOrdered = [];
-    if (!isEmpty(call_data) && !isEmpty(put_data)) {
-      callDataOrdered = orderBy(call_data, ['strike'], ['asc']);
-      putDataOrdered = orderBy(put_data, ['strike'], ['asc']);
-    }
-    if(isLoading){
-      return(
-        <h2>Loding data...</h2>
-      )
-    }
-    const isDataAvailable = (!isEmpty(callDataOrdered) && !isEmpty(putDataOrdered))
+    const {  isLoading } = this.state;
+    if(isLoading) return <h2>Loding data...</h2>;
+
+    const { marketPrice, callData, putData, expirationDates, activeExpiryDate } = this.props;
+    const isDataAvailable = (!isEmpty(callData) && !isEmpty(putData ));
+
     return(
       <div className="optionChain">
-        <h3 className="common-heading">Options chain price ({isDataAvailable && call_data[0].underlying})</h3> 
+        <h3 className="common-heading">Options chain price ({isDataAvailable && callData[0].underlying})</h3> 
         <h4>Select expiration date</h4>  
         <Select
-          value={expirationDate}
+          value={activeExpiryDate}
           onChange={this.handleDateChange}
-          options={expirationDateArray}
+          options={expirationDates}
         />
         <Scrollbars style={{ height: 500, width: '100%' }}>
           <div className="option-chain-table" style={{ width: '1079px' }}>
@@ -143,11 +98,11 @@ class OptionsChainPrice extends React.Component{
                 <Scrollbars autoHide style={{ height: 400, width: '100%' }}>
                   {
                     isDataAvailable ? (
-                    map(callDataOrdered, (callData, index) => (                    
+                    map(callData, (callDataOrderWise, index) => (                    
                       <OptionsChainRow
-                        callData={callData}
+                        callData={callDataOrderWise}
                         key={index}
-                        putData={putDataOrdered[index]}
+                        putData={putData[index]}
                         marketPrice={marketPrice}
                       />                                       
                     ))) : <tr><td colSpan="15">No data available</td></tr>
@@ -162,4 +117,22 @@ class OptionsChainPrice extends React.Component{
   }
 }
 
-export default OptionsChainPrice;
+const mapStateToProps = (state) => ({
+  symbol: state.stocks.currentStockSymbol.currentSymbol,
+  callData: state.optionsChain.callData,
+  putData: state.optionsChain.putData,
+  expirationDates: state.optionsChain.expirationDates,
+  marketPrice: state.optionsChain.marketPriceOfSymbol,
+  activeExpiryDate: state.optionsChain.activeExpiryDate,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators({
+    setOptionsChainPrice,
+    setExpirationDate,
+    setMarketPriceOfSymbol,
+    setActiveExpiryDate,
+  },dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(OptionsChainPrice);

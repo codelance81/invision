@@ -1,57 +1,29 @@
-import React from 'react'
-import axios from 'axios'
-import { isEmpty, map } from 'lodash'
-import NewsRow from './NewsRow'
+import React from 'react';
+import { isEmpty, map, isEqual } from 'lodash';
+import NewsRow from './NewsRow';
 import { Scrollbars } from 'react-custom-scrollbars';
+import { connect } from 'react-redux';
+import { setStockNews } from '../../../state/news/operation';
+import { bindActionCreators } from 'redux';
 
 class NewsPanel extends React.Component {
-  constructor(){
-    super();
-    this.state = {
-      newsArray: '',
-      symbol: ''
-    }
-  }
 
   componentDidMount(){
     const { symbol } = this.props
-    !this.isCancelled && this.setState ({
-      symbol: symbol
-    }, () => {
-      this.fetchingNews();
-    })   
+    const { actions } = this.props;    
+    actions.setStockNews(symbol);  
   }
 
-  componentWillReceiveProps(nextProps){
-    const { symbol } = this.state;
-    if(symbol !== nextProps.symbol){
-      !this.isCancelled && this.setState ({
-        symbol: nextProps.symbol
-      },() => {
-        this.fetchingNews();
-      })
+
+  componentDidUpdate(prevProps){
+    if(!isEqual(prevProps.symbol, this.props.symbol)){
+      const { actions, symbol } = this.props;
+      actions.setStockNews(symbol);
     }
-  }
-
-  componentWillUnmount() {
-    this.isCancelled = true;
-  }
-  
-  fetchingNews = () => {
-    const {symbol} = this.state
-    axios.get('https://api.iextrading.com/1.0/stock/'+symbol +'/news')
-    .then(res => {
-      !this.isCancelled && this.setState({
-        newsArray: res.data
-      })
-    })
-    .catch(err => {
-      console.log(err);
-    })
   }
  
   render(){
-    const { newsArray } = this.state
+    const { newsArray } = this.props
     if(isEmpty(newsArray)) {
       return <h3>No news available</h3>
     };
@@ -66,4 +38,15 @@ class NewsPanel extends React.Component {
   }
 }
 
-export default NewsPanel;
+const mapStateToProps = (state) =>({
+  symbol: state.stocks.currentStockSymbol.currentSymbol,
+  newsArray: state.news.stockNews
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators({
+    setStockNews
+  },dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewsPanel);

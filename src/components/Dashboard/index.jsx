@@ -5,18 +5,16 @@ import NewsPanel from './NewsPanel/index';
 import NvisionSignUp from './NvisionSignUp';
 import Adavance from './Adavance';
 import { Row, Col, Grid } from 'react-bootstrap';
-import AuthUserContext from '../Session/AuthUserContext';
 import OptionsChainPrice from './OptionsChainPrice/index';
 import AdditionalStockInfo from './AdditionalStockInfo/index';
 import HistoricalPrice from '../AdvanceRoute/Historical_Price/index';
 import MiniChart from './MiniChart/index';
 import FutureNews from './NewsPanel/FutureNews/index';
-// import ForecastInfo from './ForecastInfo/index';
 import { connect } from 'react-redux';
 
 const Dashboard = (props) => (
   <Grid>
-    <StockSearch {...props} />
+    <StockSearch handleSubmit={props.handleSubmit} />
     <Row>
       <Col md={6}>
         <div className="main-chart common-container">
@@ -31,15 +29,15 @@ const Dashboard = (props) => (
           {!props.isLoggedIn ? (<NvisionSignUp/> ) : (<Adavance/>)}
         </div>       
         <div className="news-container common-container">
-          <NewsPanel symbol={props.symbol} />
+          <NewsPanel />
         </div>
       </Col>
       <Col md={6}>
         <div className="additional-stock-container common-container">
-          <AdditionalStockInfo symbol={props.symbol} />
+          <AdditionalStockInfo />
         </div>
         <div className="mini-chart common-container">
-          <MiniChart symbol={props.symbol} /> 
+          <MiniChart /> 
         </div>
         <div className="future-news-container common-container">
           <FutureNews />
@@ -50,14 +48,14 @@ const Dashboard = (props) => (
     <Row>
       <Col md={12}>
         <div className="chain-price common-container">
-          <OptionsChainPrice symbol={props.symbol} />
+          <OptionsChainPrice />
         </div>
       </Col>
     </Row>
     <Row>
       <Col md={12}>
         <div className="historical-price">
-          <HistoricalPrice symbol={props.symbol} />
+          <HistoricalPrice />
         </div>
       </Col>
     </Row>
@@ -65,7 +63,9 @@ const Dashboard = (props) => (
 )
 
 const mapStateToProps = (state) => ({
-  isLoggedIn: state.auth.isAuthenticated
+  isLoggedIn: state.auth.isAuthenticated,
+  symbol: state.stocks.currentStockSymbol.currentSymbol,
+  symbolName: state.stocks.currentStockSymbol.name,
 });
 
 

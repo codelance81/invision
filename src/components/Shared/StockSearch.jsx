@@ -6,6 +6,7 @@ import { isEmpty } from 'lodash';
 import 'react-select/dist/react-select.css';
 import 'react-virtualized/styles.css'
 import 'react-virtualized-select/styles.css'
+import { connect } from 'react-redux';
 
 const StockSearch = ({ symbol, allSymbols, symbolName, handleSubmit }) => {
   let filterOptions = [];
@@ -31,5 +32,13 @@ const StockSearch = ({ symbol, allSymbols, symbolName, handleSubmit }) => {
   );
 }
 
-export default StockSearch;
+
+const mapStateToProps = (state) => ({
+  symbol: state.stocks.currentStockSymbol.currentSymbol,
+  allSymbols: state.stocks.allStockSymbols.allSymbol,
+  symbolName: state.stocks.currentStockSymbol.name
+
+})
+
+export default connect(mapStateToProps, null)(StockSearch);
 

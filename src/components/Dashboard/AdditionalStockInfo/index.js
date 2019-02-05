@@ -1,74 +1,45 @@
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
-import axios from 'axios';
 import { isEqual, merge, chunk, map } from 'lodash';
+import { connect } from 'react-redux';
+import { setAdditionalStockSet_1, setAdditionalStockSet_2, setAdditionalStockSet_3 } from '../../../state/additionalStock/operations'
+import { bindActionCreators } from 'redux';
 
 class AdditionalStockInfo extends React.Component{
 
   constructor(){
     super();
     this.state = {
-      dataSet1: [],  // dataSet1 contain open, previous close, pe-ratio,market cap etc.
-      dataSet2: [],  // dataSet2 contain beta, divident & yield, lastest eps etc.
-      dataSet3: [],  // dataSet3 contain website, sector, exchange, industry etc.
       additionalStockInfo: [], 
     }
   }
   
   componentDidMount() {
-    this.mounted = true;
-    const { symbol } = this.props;
-    this.fetchingAdditionalStockInfoCall1(symbol);
+   this.fetchingAdditionalStockInfo();
   }
 
-  componentWillUnmount(){
-    this.mounted = false;
+  //check next props symbol is different or not
+  componentDidUpdate(prevProps){
+    if(!isEqual(prevProps.symbol,this.props.symbol)){
+      this.fetchingAdditionalStockInfo();
+    }
   }
 
-  fetchingAdditionalStockInfoCall1 = (symbol) => {
-    axios.get(`https://api.iextrading.com/1.0/stock/${symbol}/quote`)
-    .then(res => {
-      if (this.mounted) {
-        this.setState({ dataSet1: res.data }, () => {
-          this.fetchingAdditionalStockInfoCall2(symbol, () => {
-            this.fetchingAdditionalStockInfoCall3(symbol);
-          });
-        });
-      };
-    });   
-  }
-
-  fetchingAdditionalStockInfoCall2 = (symbol, callback) => {
-    axios.get(`https://api.iextrading.com/1.0/stock/${symbol}/stats`)
-    .then(res => {
-      if (this.mounted) {
-        this.setState({dataSet2: res.data}, () => {
-          callback();
-        });
-      };
-    }).catch(err => {
-      console.log(err);
-      return false;
-    });
-  }
-
-  fetchingAdditionalStockInfoCall3 = (symbol) => {
-    axios.get(`https://api.iextrading.com/1.0/stock/${symbol}/company`)
-    .then(res => {
-      if (this.mounted) {
-        this.setState({ dataSet3: res.data} , () => {
+  fetchingAdditionalStockInfo = () => {
+    const { symbol, actions } = this.props;
+    actions.setAdditionalStockSet_1(symbol).then(() => {
+      actions.setAdditionalStockSet_2(symbol).then(() => {
+        actions.setAdditionalStockSet_3(symbol).then(() => {
           this.formattedData();
-        })
-      };
-    }).catch(err => {
-      console.log(err);
+        });
+      });
     });
   }
 
   formattedData = () => {
-    
-    const { dataSet1, dataSet2, dataSet3 } = this.state; 
-    const data = merge(dataSet1, dataSet2, dataSet3);
+
+    const { additionalStockInfoDataSet_1, additionalStockInfoDataSet_2, additionalStockInfoDataSet_3 } = this.props; 
+    const data = merge(additionalStockInfoDataSet_1, additionalStockInfoDataSet_2, additionalStockInfoDataSet_3);
     const allAdditionalStockInfo = [];
     allAdditionalStockInfo.push({key: 'exchange',value: data.primaryExchange});
     allAdditionalStockInfo.push({key: 'float',value: data.float});
@@ -95,7 +66,7 @@ class AdditionalStockInfo extends React.Component{
   }
 
   render(){
-    const { additionalStockInfo } = this.state; 
+    const { additionalStockInfo } = this.state;
     return(
       <React.Fragment>
         <h3 className="common-heading">Additional Stock Information</h3>
@@ -118,4 +89,22 @@ class AdditionalStockInfo extends React.Component{
   }
 }
 
-export default AdditionalStockInfo;
+
+const mapStateToProps = (state) = ({
+  symbol: state.stocks.currentStockSymbol.currentSymbol,
+  additionalStockInfoDataSet_1: state.additionalStockInfo.additionStockDataSet_1,
+  additionalStockInfoDataSet_2: state.additionalStockInfo.additionStockDataSet_2,
+  additionalStockInfoDataSet_3: state.additionalStockInfo.additionStockDataSet_3
+})
+  
+
+
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators({
+    setAdditionalStockSet_1,
+    setAdditionalStockSet_2,
+    setAdditionalStockSet_3
+  },dispatch)
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(AdditionalStockInfo);

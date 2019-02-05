@@ -1,8 +1,7 @@
 import React from 'react';
-import { Button,Grid, Row,Form,Col, FormGroup, FormControl,Alert, Panel, Modal } from 'react-bootstrap';
+import { Button, Form, FormGroup, FormControl, Alert, Modal } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
 import { signInUser } from '../../state/auth/operations';
 
 class SignInForm extends React.Component {

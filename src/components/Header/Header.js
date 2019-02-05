@@ -86,7 +86,6 @@ const mapStateToProps = (state) => ({
   isLoggedIn: state.auth.isAuthenticated
 });
 
-
 const mapDispatchToProps = (dispatch) => ({
   actions: bindActionCreators({
     signOutUser,

@@ -1,0 +1,2 @@
+export const SET_FUTURE_NEWS = 'SET_FUTURE_NEWS';
+export const SET_STOCK_NEWS = 'SET_STOCK_NEWS';
