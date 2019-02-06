@@ -1,9 +1,21 @@
 import React from 'react';
+import { isEqual } from 'lodash';
 import { connect } from 'react-redux';
 
 class MiniChart extends React.Component {
 
   componentDidMount() {
+    this.handleChangeSymbol();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { symbol } = this.props;
+    if (!isEqual(symbol, prevProps.symbol)) {
+      this.handleChangeSymbol();
+    }
+  }
+
+  handleChangeSymbol = () => {
     const { symbol } = this.props;
     const scriptObject = document.createElement('script');
     const scriptContent = `{"symbol": "${symbol}","width": "100%","height": 180,"locale": "in","dateRange": "1y","colorTheme": "light","trendLineColor": "#37a6ef","underLineColor": "#e3f2fd","isTransparent": false,"autosize": false,"largeChartUrl": ""}`;
@@ -12,6 +24,7 @@ class MiniChart extends React.Component {
     this.miniChart.innerHTML = '';
     this.miniChart.append(scriptObject);
   }
+
   render() {
     return (
       <div>

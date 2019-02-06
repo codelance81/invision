@@ -3,6 +3,7 @@ import * as types from "./types";
 const initialState = {
   currentSymbol: 'SPY',
   name: 'SPDR S&P 500',
+  symbolWatchListWithPrice: []
 }
 
 const currentSymbolReducer = (state = initialState, actions) => {
@@ -13,7 +14,13 @@ const currentSymbolReducer = (state = initialState, actions) => {
         currentSymbol: actions.data.label,
         name: actions.data.name,
       }
-      
+
+    case types.SET_SYMBOL_TO_WATCH_LIST_WITH_PRICE:
+    return {
+      ...state,
+      symbolWatchListWithPrice: [...state.symbolWatchListWithPrice, actions.data]
+    }
+
     default:
       return state;
   }

@@ -90,7 +90,7 @@ class AdditionalStockInfo extends React.Component{
 }
 
 
-const mapStateToProps = (state) = ({
+const mapStateToProps = (state) => ({
   symbol: state.stocks.currentStockSymbol.currentSymbol,
   additionalStockInfoDataSet_1: state.additionalStockInfo.additionStockDataSet_1,
   additionalStockInfoDataSet_2: state.additionalStockInfo.additionStockDataSet_2,

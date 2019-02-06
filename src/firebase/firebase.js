@@ -24,12 +24,16 @@ const config = process.env.NODE_ENV === 'production'
   ? prodConfig
   : devConfig;
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(config);
-}
+// if (!firebase.apps.length) {
+//   firebase.initializeApp(config);
+// }
 
-const db = firebase.database();
-const auth = firebase.auth();
+// const db = firebase.database();
+// const auth = firebase.auth();
+
+//need to remoce 35,36
+const db ='';
+const auth ='' ;
 
 export {
   db,

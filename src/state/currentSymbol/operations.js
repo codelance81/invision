@@ -1,6 +1,7 @@
 import * as actions from './actionCreators';
 import axios from 'axios';
 import { forEach } from 'lodash';
+import { db } from '../localFirebase/config';
 
 export const setCurrentSymbol = (data) => {
   return(
@@ -28,4 +29,15 @@ export const setAllSymbol = () => {
       console.log(err);
     })
   }
+}
+
+export const setSymbolToWatchListWithPrice = (addSymbol) => {
+  return(
+    (dispatch, getState) => {
+      const UserUid = getState().auth.uid
+      this.symbolData = db.ref().child('symboldataWithPrice').child(UserUid);
+      this.symbolData.push(addSymbol);
+      dispatch(actions.addSymbolToWatchLisWithPricetAction(addSymbol))
+    }
+  )
 }
