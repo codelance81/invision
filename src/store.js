@@ -1,18 +1,18 @@
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { routerMiddleware } from 'connected-react-router';
-import {createBrowserHistory} from 'history';
+import { createBrowserHistory } from 'history';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage'
+import storage from 'redux-persist/lib/storage';
 
 import rootReducer from './state/rootReducer';
 
 const persistConfig = {
   key: 'invision',
-  storage: storage,
+  storage,
   whitelist: ['auth'],
-}
+};
 
 export const history = createBrowserHistory();
 
@@ -26,7 +26,8 @@ const persistedStore = createStore(
       thunk,
       routerMiddleware(history),
     ),
-));
+  ),
+);
 
 export const persistor = persistStore(persistedStore);
 

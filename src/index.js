@@ -1,14 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { PersistGate } from 'redux-persist/integration/react';
+import { Provider } from 'react-redux';
+import { ConnectedRouter } from 'connected-react-router';
+import store, { history, persistor } from './store';
 import './index.css';
 import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
-import { PersistGate } from 'redux-persist/integration/react';
-
-import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'connected-react-router';
-
-import store, { history, persistor } from './store';
 
 ReactDOM.render(
   <Provider store={store}>
@@ -18,5 +16,6 @@ ReactDOM.render(
       </ConnectedRouter>
     </PersistGate>
   </Provider>
-, document.getElementById('root'));
+  , document.getElementById('root'),
+);
 registerServiceWorker();

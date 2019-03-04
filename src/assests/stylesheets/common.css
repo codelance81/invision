@@ -219,3 +219,11 @@ body {
     display: block;
   }
 }
+
+.symbol-notifier {
+  position: fixed;
+  right: 40px;
+  width: 380px;
+  z-index: 99999;
+  top: 80px;
+}

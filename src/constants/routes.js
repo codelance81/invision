@@ -5,4 +5,5 @@ export const PASSWORD_FORGET = '/pw-forget';
 export const HOME = '/home';
 export const ACCOUNT = '/account';
 export const DASHBOARD = '/dashboard';
-export const ADAVANCED_FEATURES = '/adavanced-features'
+export const ADAVANCED_FEATURES = '/adavanced-features';
+export const WATCH_LIST = '/watch-list';

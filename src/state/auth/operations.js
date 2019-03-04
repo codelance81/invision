@@ -1,27 +1,28 @@
 import { auth } from '../../firebase';
 import * as actions from './actionCreators';
 
-export const signInUser = (data) => (
-  (dispatch) => (
+export const signInUser = data => (
+  () => (
     auth.doSignInWithEmailAndPassword(data.email, data.password)
-    .then((res) => {
-      if (res) {
-        const data = res.user.toJSON();
-        dispatch(actions.signInUserAction(data));
-      }
-    })
-    .catch(err => {
-      console.log(err)
-    })
-  ) 
-)
+      .then((res) => {
+        if (res) {
+          const response = res.user.toJSON();
+          return response;
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        return null;
+      })
+  )
+);
 
 export const signOutUser = () => (
-  (dispatch) => (
+  dispatch => (
     auth.doSignOut().then(() => {
       dispatch(actions.signOutUserAction(null));
-    },(err) => {
+    }, (err) => {
       console.log(err);
     })
   )
-)
+);
